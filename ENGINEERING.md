@@ -216,7 +216,7 @@ A build script will:
 
 ### 6.2 Request Flow
 
-1. Client requests `/api/pokemon/radical-red/bulbasaur`
+1. Client requests `/api/games/radical-red/pokemon/bulbasaur`
 2. Request is routed to API function
 3. If the CDN has a cached response, it returns it immediately
 4. Otherwise, the API function reads `/public/data/pokemon/radical-red/bulbasaur.json`
@@ -297,8 +297,10 @@ export async function getPokemon(game: string, id: string): Promise<Pokemon> {
 
 The API will expose endpoints:
 
-- `GET /api/[game]/pokemon/[id]` - Get a specific Pokemon
-- `GET /api/[game]/pokedex` - Get full Pokedex for a game
+- `GET /api/pokemon` - Get a master list of all Pokemon
+- `GET /api/pokemon/[id]` - Get a specific Pokemon
+- `GET /api/games/[game]/pokemon` - Get full Pokedex for a game
+- `GET /api/games/[game]/pokemon/[id]` - Get a specific Pokemon with data from that game
 - `GET /api/generation/[gen]` - Get Pokemon by generation
 
 ### 7.4 Caching Strategy
@@ -351,8 +353,10 @@ The API will expose endpoints:
 The API will be complemented by a Next.js UI layer:
 
 - `/` - Home page with information about the API
-- `/[game]` - Game Pokedex page
-- `/[game]/pokemon/[id]` - Individual Pokemon page
+- `/pokemon` - Master list of all Pokemon
+- `/pokemon/[id]` - The most up-to-date individual Pokemon data
+- `/games/[game]` - Game Pokedex page
+- `/games/[game]/pokemon/[id]` - Individual Pokemon page with data from that game
 - `/generation/[gen]` - Generation list page
 - `/api-docs` - Interactive API documentation
 
@@ -362,8 +366,8 @@ The API will be complemented by a Next.js UI layer:
 pokemon-api/
 ├── src/
 │   ├── app/                       # Next.js App Router (UI routes)
+│   │   └── api/                   # API routes (endpoints)
 │   ├── components/                # Shared UI components
-│   ├── api/                       # API routes (endpoints)
 │   ├── data/                      # Source data (TypeScript)
 │   ├── lib/                       # Shared utilities
 │   └── scripts/                   # Build scripts
@@ -376,6 +380,7 @@ pokemon-api/
 
 ### 11.1 Potential Enhancements
 
+- **Support for Pokemon learnsets with version-specific data**
 - Additional list types (by type, by ability) if demand exists
 - GraphQL API layer for more flexible queries
 - Advanced search capabilities
