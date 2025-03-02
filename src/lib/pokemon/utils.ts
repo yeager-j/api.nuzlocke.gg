@@ -89,7 +89,6 @@ export function applyVersionToPokemon(
 
 export function applyVersionToSpecies(
   pokemonSpecies: PokemonSpecies,
-  _version: PokemonVersionGroup,
 ): VersionedPokemonSpecies {
   return {
     name: pokemonSpecies.name,

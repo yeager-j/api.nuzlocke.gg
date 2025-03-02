@@ -78,8 +78,7 @@ export interface PokemonSpecies extends PokemonCommon<PokemonSpeciesName> {
   nationalDexNumber: number;
 }
 
-export interface VersionedPokemonSpecies
-  extends Omit<PokemonSpecies, "availableIn"> {}
+export type VersionedPokemonSpecies = Omit<PokemonSpecies, "availableIn">;
 
 export interface Pokemon extends PokemonCommon<PokemonFormName> {
   modes: PokemonMode[];

@@ -105,7 +105,7 @@ export async function processPokemonForVersion(
   }
 
   const versionData = PokemonVersionGroupData[version];
-  const versionedSpecies = applyVersionToSpecies(pokemon.species, version);
+  const versionedSpecies = applyVersionToSpecies(pokemon.species);
 
   const versionedForms = pokemon.forms
     .filter((form) => form.availableIn.includes(version))
