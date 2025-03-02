@@ -31,7 +31,7 @@ The central challenge is managing the complex versioned data structure while pro
 
 ### 3.2 Non-Functional Requirements
 
-- Fast response times (<100ms p95)
+- Fast response times (<50ms p95)
 - Low operational complexity (no database management)
 - Serverless compatible
 - Low build/deployment complexity
@@ -145,7 +145,7 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
         2-ivysaur.ts
         # All Pokemon with full versioned data
 /public
-  /data
+  /v1
     /pokemon
       /red-blue      # Version-specific data
         bulbasaur.json
@@ -222,7 +222,7 @@ A build script will:
 1. Client requests `/api/games/radical-red/pokemon/bulbasaur`
 2. Request is routed to API function
 3. If the CDN has a cached response, it returns it immediately
-4. Otherwise, the API function reads `/public/data/pokemon/radical-red/bulbasaur.json`
+4. Otherwise, the API function reads `/public/v1/pokemon/radical-red/bulbasaur.json`
 5. JSON is returned to client (cached in CDN for future requests)
 
 ## 7. Implementation Details
@@ -318,9 +318,9 @@ The API will expose endpoints:
 
 ### 8.1 File Size Analysis
 
-- Average single Pokemon JSON: ~2-5KB
+- Average single Pokemon JSON: <1kb
 - List JSON files: ~50-100KB
-- Total storage for 1000 Pokemon × 10 game versions: ~50-100MB
+- Total storage for 1000 Pokemon × 18 game versions: ~25MB
 
 ### 8.2 Expected Performance
 

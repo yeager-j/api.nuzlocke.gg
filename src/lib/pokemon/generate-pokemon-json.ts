@@ -61,7 +61,7 @@ async function writeSpeciesFile(
       "species",
       `${speciesOutput.name}.json`,
     ),
-    JSON.stringify(speciesOutput, null, 2),
+    JSON.stringify(speciesOutput),
   );
 }
 
@@ -83,7 +83,7 @@ async function writeFormFile(
       "forms",
       `${formOutput.name}.json`,
     ),
-    JSON.stringify(formOutput, null, 2),
+    JSON.stringify(formOutput),
   );
 }
 

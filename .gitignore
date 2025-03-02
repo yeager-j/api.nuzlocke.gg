@@ -19,7 +19,7 @@
 
 # production
 /build
-/public/data
+/public/v*
 
 # misc
 .DS_Store
