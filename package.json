@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:deploy": "pnpm run build && pnpm run generate-data",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
-    "generate-data": "tsx ./src/lib/pokemon/generate-pokemon-json.ts"
+    "generate-data": "tsx ./scripts/build.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
