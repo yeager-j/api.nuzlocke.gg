@@ -1,4 +1,4 @@
-import { PokemonVersionGroups } from "@/data/versions";
+import { PokemonVersionGroup } from "@/data/versions";
 
 export type PokemonType =
   | "Normal"
@@ -23,7 +23,13 @@ export type PokemonType =
 export interface VersionedProperty<T> {
   default: T;
   versions: {
-    appliesTo: PokemonVersionGroups[];
+    appliesTo: PokemonVersionGroup[];
     value: T;
   }[];
+}
+
+export interface VersionGroupMetadata {
+  id: string;
+  name: string;
+  order: number;
 }

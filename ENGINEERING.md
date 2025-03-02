@@ -140,9 +140,10 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
 /src
   /data
     /master          # TypeScript source of truth
-      bulbasaur.ts
-      ivysaur.ts
-      # All Pokemon with full versioned data
+      /generation-1
+        1-bulbasaur.ts
+        2-ivysaur.ts
+        # All Pokemon with full versioned data
 /public
   /data
     /pokemon
@@ -177,9 +178,11 @@ interface VersionedProperty<T> {
 
 export interface Pokemon {
   name: string;
-  movePool: VersionedProperty<string[]>;
+  displayName: string;
+  availableIn: PokemonVersionGroup[];
   species: PokemonSpecies;
   modes: PokemonMode[];
+  evolution: Evolution;
 }
 ```
 

@@ -1,6 +1,6 @@
 import { Moves } from "@/data/moves/move-list";
-import { VersionedProperty } from "@/data/types";
-import { PokemonVersionGroups } from "@/data/versions";
+import { PokemonType, VersionedProperty } from "@/data/types";
+import { PokemonVersionGroup } from "@/data/versions";
 
 export enum MoveCategory {
   PHYSICAL = "PHYSICAL",
@@ -11,7 +11,8 @@ export enum MoveCategory {
 export interface Move {
   name: Moves;
   displayName: string;
-  availableIn: PokemonVersionGroups[];
+  availableIn: PokemonVersionGroup[];
+  type: VersionedProperty<PokemonType>;
   description: VersionedProperty<string>;
   category: VersionedProperty<MoveCategory>;
   power: VersionedProperty<number>;

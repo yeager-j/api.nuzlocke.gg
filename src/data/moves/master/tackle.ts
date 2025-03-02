@@ -8,8 +8,8 @@ import {
   gen4Games,
   gen5Games,
   gen6Games,
-} from "@/data/pokemon/common";
-import { PokemonVersionGroups } from "@/data/versions";
+  PokemonVersionGroup,
+} from "@/data/versions";
 
 const Tackle: Move = {
   name: Moves.TACKLE,
@@ -23,36 +23,36 @@ const Tackle: Move = {
         value:
           "A physical attack in which the user charges and slams into the target with its whole body.",
         appliesTo: [
-          PokemonVersionGroups.DIAMOND_PEARL,
-          PokemonVersionGroups.PLATINUM,
-          PokemonVersionGroups.HEARTGOLD_SOULSILVER,
-          PokemonVersionGroups.BLACK_WHITE,
-          PokemonVersionGroups.BLACK_2_WHITE_2,
-          PokemonVersionGroups.XY,
-          PokemonVersionGroups.OMEGA_RUBY_ALPHA_SAPPHIRE,
-          PokemonVersionGroups.SUN_MOON,
-          PokemonVersionGroups.ULTRA_SUN_ULTRA_MOON,
-          PokemonVersionGroups.SWORD_SHIELD,
-          PokemonVersionGroups.SCARLET_VIOLET,
+          PokemonVersionGroup.DIAMOND_PEARL,
+          PokemonVersionGroup.PLATINUM,
+          PokemonVersionGroup.HEARTGOLD_SOULSILVER,
+          PokemonVersionGroup.BLACK_WHITE,
+          PokemonVersionGroup.BLACK_2_WHITE_2,
+          PokemonVersionGroup.XY,
+          PokemonVersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE,
+          PokemonVersionGroup.SUN_MOON,
+          PokemonVersionGroup.ULTRA_SUN_ULTRA_MOON,
+          PokemonVersionGroup.SWORD_SHIELD,
+          PokemonVersionGroup.SCARLET_VIOLET,
         ],
       },
       {
         value:
           "A physical attack in which the user charges, full body, into the foe.",
-        appliesTo: [PokemonVersionGroups.FIRERED_LEAFGREEN],
+        appliesTo: [PokemonVersionGroup.FIRERED_LEAFGREEN],
       },
       {
         value: "Charges the foe with a full-body tackle.",
         appliesTo: [
-          PokemonVersionGroups.RUBY_SAPPHIRE,
-          PokemonVersionGroups.EMERALD,
+          PokemonVersionGroup.RUBY_SAPPHIRE,
+          PokemonVersionGroup.EMERALD,
         ],
       },
       {
         value: "A full-body charge attack.",
         appliesTo: [
-          PokemonVersionGroups.GOLD_SILVER,
-          PokemonVersionGroups.CRYSTAL,
+          PokemonVersionGroup.GOLD_SILVER,
+          PokemonVersionGroup.CRYSTAL,
         ],
       },
     ],
