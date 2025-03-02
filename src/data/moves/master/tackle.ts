@@ -15,6 +15,10 @@ const Tackle: Move = {
   name: Moves.TACKLE,
   displayName: "Tackle",
   availableIn: [...availableStartingRB],
+  type: {
+    default: "Normal",
+    versions: [],
+  },
   description: {
     default:
       "A physical attack in which the user charges and slams into the target with its whole body.",
