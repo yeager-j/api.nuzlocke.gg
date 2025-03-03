@@ -4,13 +4,13 @@ import { beforeAll, describe, test, vi } from "vitest";
 
 import CharizardDefinition from "@/data/pokemon/master/generation-1/6-charizard";
 import { PokemonVersionGroup, PokemonVersionGroupData } from "@/data/versions";
+import { processPokemonForVersion } from "@/lib/pokemon/build-pokemon-api";
 import { POKEMON_OUTPUT_PATH } from "@/lib/pokemon/common";
-import { processPokemonForVersion } from "@/lib/pokemon/generate-pokemon-json";
 
 vi.mock("node:fs");
 vi.mock("node:fs/promises");
 
-describe("Generate JSON", () => {
+describe("Generate Pokemon JSON", () => {
   beforeAll(() => {
     // reset the state of in-memory fs
     vol.reset();

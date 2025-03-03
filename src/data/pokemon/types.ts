@@ -1,9 +1,5 @@
-import {
-  EvolutionTrigger,
-  Gender,
-  TimeOfDay,
-  Weather,
-} from "@/data/pokemon/common";
+import { Evolution, VersionedEvolution } from "@/data/evolution/types";
+import { Encounter } from "@/data/locations/types";
 import {
   PokemonFormName,
   PokemonModeName,
@@ -11,51 +7,6 @@ import {
 } from "@/data/pokemon/names";
 import { PokemonType, VersionedProperty } from "@/data/types";
 import { PokemonVersionGroup } from "@/data/versions";
-
-/**
- * Discriminated union of all possible evolution conditions
- */
-export type EvolutionCondition =
-  | { type: "LEVEL"; minLevel: number }
-  | { type: "FRIENDSHIP"; minFriendship: number }
-  | { type: "HELD_ITEM"; item: string }
-  | { type: "MOVE_KNOWN"; move: string }
-  | { type: "MOVE_TYPE_KNOWN"; moveType: PokemonType }
-  | { type: "LOCATION"; location: string }
-  | { type: "TIME_OF_DAY"; timeOfDay: TimeOfDay }
-  | { type: "GENDER"; gender: Gender }
-  | { type: "WEATHER"; weather: Weather }
-  | { type: "PARTY_POKEMON"; pokemon: string }
-  | { type: "TRADE_WITH"; pokemon: string }
-  | { type: "BEAUTY"; minBeauty: number }
-  | {
-      type: "MOVE_USAGE";
-      description: string;
-    }
-  | { type: "CRITICAL_HITS"; count: number }
-  | { type: "DAMAGE_TAKEN"; description: string }
-  | { type: "ABILITY"; ability: string }
-  | { type: "ITEM_USE"; item: string }
-  | { type: "SPECIAL"; description: string };
-
-export interface EvolutionBranch {
-  to: PokemonFormName;
-  trigger: EvolutionTrigger;
-  conditions: EvolutionCondition[];
-}
-
-/**
- * Complete evolution data for a Pokemon species
- */
-export interface Evolution {
-  from: PokemonFormName | "";
-  evolutionBranches: VersionedProperty<EvolutionBranch[]>;
-}
-
-export interface VersionedEvolution
-  extends Omit<Evolution, "evolutionBranches"> {
-  evolutionBranches: EvolutionBranch[];
-}
 
 interface PokemonCommon<T extends string> {
   name: T;
@@ -83,12 +34,14 @@ export type VersionedPokemonSpecies = Omit<PokemonSpecies, "availableIn">;
 export interface Pokemon extends PokemonCommon<PokemonFormName> {
   modes: PokemonMode[];
   evolution: Evolution;
+  encounters: VersionedProperty<Encounter[]>;
 }
 
 export interface VersionedPokemon
-  extends Omit<Pokemon, "evolution" | "modes" | "availableIn"> {
+  extends Omit<Pokemon, "evolution" | "encounters" | "modes" | "availableIn"> {
   modes: VersionedPokemonMode[];
   evolution: VersionedEvolution;
+  encounters: Encounter[];
 }
 
 export interface PokemonDefinition {

@@ -1,3 +1,4 @@
+import { EncounterMethod } from "@/data/locations/common";
 import {
   Pokemon,
   PokemonDefinition,
@@ -98,6 +99,14 @@ const Charizard: Pokemon = {
       default: [],
       versions: [],
     },
+  },
+  encounters: {
+    default: [
+      {
+        method: EncounterMethod.EVOLVE,
+      },
+    ],
+    versions: [],
   },
 };
 

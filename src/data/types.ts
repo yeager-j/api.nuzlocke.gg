@@ -33,3 +33,9 @@ export interface VersionGroupMetadata {
   name: string;
   order: number;
 }
+
+export interface PokemonGameMetadata {
+  id: string;
+  name: string;
+  versionGroup: PokemonVersionGroup;
+}

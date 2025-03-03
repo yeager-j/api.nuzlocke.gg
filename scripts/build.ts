@@ -1,3 +1,9 @@
-import { generatePokemonJson } from "@/lib/pokemon/generate-pokemon-json";
+import { buildLocationApi } from "@/lib/pokemon/build-location-api";
+import { buildPokemonApi } from "@/lib/pokemon/build-pokemon-api";
 
-generatePokemonJson();
+async function main() {
+  await buildPokemonApi();
+  await buildLocationApi();
+}
+
+main();

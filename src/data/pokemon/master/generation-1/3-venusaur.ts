@@ -1,3 +1,4 @@
+import { EncounterMethod } from "@/data/locations/common";
 import {
   Pokemon,
   PokemonDefinition,
@@ -80,6 +81,14 @@ const Venusaur: Pokemon = {
       default: [],
       versions: [],
     },
+  },
+  encounters: {
+    default: [
+      {
+        method: EncounterMethod.EVOLVE,
+      },
+    ],
+    versions: [],
   },
 };
 

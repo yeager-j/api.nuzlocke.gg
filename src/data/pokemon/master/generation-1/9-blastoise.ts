@@ -1,3 +1,4 @@
+import { EncounterMethod } from "@/data/locations/common";
 import {
   Pokemon,
   PokemonDefinition,
@@ -80,6 +81,14 @@ const Blastoise: Pokemon = {
       default: [],
       versions: [],
     },
+  },
+  encounters: {
+    default: [
+      {
+        method: EncounterMethod.EVOLVE,
+      },
+    ],
+    versions: [],
   },
 };
 

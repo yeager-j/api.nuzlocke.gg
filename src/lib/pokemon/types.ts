@@ -1,8 +1,10 @@
+import { EncounterMethod } from "@/data/locations/common";
 import {
   PokemonSpecies,
   VersionedPokemon,
   VersionedPokemonMode,
 } from "@/data/pokemon/types";
+import { PokemonGame } from "@/data/versions";
 
 export interface PokemonSpeciesOutput
   extends Omit<PokemonSpecies, "availableIn"> {
@@ -14,4 +16,15 @@ export interface PokemonSpeciesOutput
 export interface PokemonOutput extends VersionedPokemon {
   modes: VersionedPokemonMode[];
   species: Omit<PokemonSpecies, "availableIn">;
+}
+
+export interface PokemonEncounter {
+  pokemon: PokemonOutput;
+  method: EncounterMethod;
+  exclusiveTo?: PokemonGame;
+}
+
+export interface LocationOutput {
+  id: string;
+  encounters: PokemonEncounter[];
 }

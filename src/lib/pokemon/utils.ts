@@ -1,5 +1,8 @@
+import path from "path";
+
 import {
   Pokemon,
+  PokemonDefinition,
   PokemonMode,
   PokemonSpecies,
   VersionedPokemon,
@@ -8,6 +11,24 @@ import {
 } from "@/data/pokemon/types";
 import { VersionedProperty } from "@/data/types";
 import { PokemonVersionGroup } from "@/data/versions";
+import { POKEMON_DATA_PATH } from "@/lib/pokemon/common";
+
+/**
+ * Asynchronously loads a Pokémon definition file based on the specified generation and master file name.
+ *
+ * @param {string} generation - The Pokémon generation to load data for.
+ * @param {string} masterFile - The name of the master file containing Pokémon definitions.
+ * @return {Promise<PokemonDefinition>} A promise that resolves to the loaded Pokémon definition.
+ */
+export async function loadPokemon(
+  generation: string,
+  masterFile: string,
+): Promise<PokemonDefinition> {
+  const { default: pokemon } = await import(
+    path.join(POKEMON_DATA_PATH, generation, masterFile)
+  );
+  return pokemon;
+}
 
 /**
  * Retrieves the data corresponding to the specified version from the provided
@@ -84,6 +105,7 @@ export function applyVersionToPokemon(
         version,
       ),
     },
+    encounters: getVersionedData(pokemonForm.encounters, version),
   };
 }
 

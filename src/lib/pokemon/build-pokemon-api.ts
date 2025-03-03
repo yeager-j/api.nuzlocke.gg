@@ -8,24 +8,10 @@ import { PokemonOutput, PokemonSpeciesOutput } from "@/lib/pokemon/types";
 import {
   applyVersionToPokemon,
   applyVersionToSpecies,
+  loadPokemon,
 } from "@/lib/pokemon/utils";
 
-/**
- * Asynchronously loads a Pokémon definition file based on the specified generation and master file name.
- *
- * @param {string} generation - The Pokémon generation to load data for.
- * @param {string} masterFile - The name of the master file containing Pokémon definitions.
- * @return {Promise<PokemonDefinition>} A promise that resolves to the loaded Pokémon definition.
- */
-async function loadPokemon(
-  generation: string,
-  masterFile: string,
-): Promise<PokemonDefinition> {
-  const { default: pokemon } = await import(
-    path.join(POKEMON_DATA_PATH, generation, masterFile)
-  );
-  return pokemon;
-}
+type VersionPokedexMap<T> = Map<PokemonVersionGroup, T[]>;
 
 /**
  * Ensures that the required directories for species and forms exist within the specified version directory.
@@ -39,6 +25,9 @@ async function ensureDirectories(versionId: string): Promise<void> {
     recursive: true,
   });
   await fs.mkdir(path.join(POKEMON_OUTPUT_PATH, versionId, "forms"), {
+    recursive: true,
+  });
+  await fs.mkdir(path.join(POKEMON_OUTPUT_PATH, versionId, "lists"), {
     recursive: true,
   });
 }
@@ -88,20 +77,23 @@ async function writeFormFile(
 }
 
 /**
- * Processes the given Pokémon data for a specific version by filtering and applying version-specific data to the species and its forms,
- * ensuring that all necessary data is written to the appropriate files and directories.
+ * Processes a Pokemon for a specific version by applying version-specific data to its species and forms,
+ * ensuring the required directories exist, writing output files, and returning the processed data.
  *
- * @param {PokemonDefinition} pokemon The definition of the Pokémon including its species and forms.
- * @param {PokemonVersionGroup} version The specific version group for which the Pokémon data should be processed.
- * @return {Promise<void>} A promise that resolves when the processing and file writing are complete.
+ * @param {PokemonDefinition} pokemon - The definition of the Pokemon to process, including forms and species data.
+ * @param {PokemonVersionGroup} version - The version group for which the Pokemon data should be processed.
+ * @return {Promise<{speciesOutput: PokemonSpeciesOutput | null, formOutputs: PokemonOutput[]}>} A promise that resolves to an object containing the processed species and forms, or null if the Pokemon isn't available in this version.
  */
 export async function processPokemonForVersion(
   pokemon: PokemonDefinition,
   version: PokemonVersionGroup,
-): Promise<void> {
+): Promise<{
+  speciesOutput: PokemonSpeciesOutput | null;
+  formOutputs: PokemonOutput[] | null;
+}> {
   // Skip if Pokemon isn't available in this version
   if (!pokemon.species.availableIn.includes(version)) {
-    return;
+    return { speciesOutput: null, formOutputs: null };
   }
 
   const versionData = PokemonVersionGroupData[version];
@@ -122,16 +114,21 @@ export async function processPokemonForVersion(
   // Write species file
   await writeSpeciesFile(versionData.id, speciesOutput);
 
-  // Write all form files in parallel
+  // Process and write all form files in parallel
+  const formOutputs: PokemonOutput[] = [];
   await Promise.all(
     versionedForms.map((form) => {
       const formOutput = {
         ...form,
         species: versionedSpecies,
       };
+
+      formOutputs.push(formOutput);
       return writeFormFile(versionData.id, formOutput);
     }),
   );
+
+  return { speciesOutput, formOutputs };
 }
 
 /**
@@ -141,10 +138,14 @@ export async function processPokemonForVersion(
  *
  * @return {Promise<void>} A promise that resolves when the JSON generation process is complete.
  */
-export async function generatePokemonJson(): Promise<void> {
+export async function buildPokemonApi(): Promise<void> {
   console.log("Starting Pokemon JSON generation...");
 
   try {
+    const versionFormListMap: VersionPokedexMap<PokemonOutput> = new Map();
+    const versionSpeciesListMap: VersionPokedexMap<PokemonSpeciesOutput> =
+      new Map();
+
     // Get all generations
     const generations = await fs.readdir(POKEMON_DATA_PATH);
     console.log(`Found ${generations.length} generations`);
@@ -165,7 +166,25 @@ export async function generatePokemonJson(): Promise<void> {
 
         // Process all versions in parallel for this Pokemon
         const versionPromises = Object.values(PokemonVersionGroup).map(
-          (version) => processPokemonForVersion(pokemon, version),
+          async (version) => {
+            const { speciesOutput, formOutputs } =
+              await processPokemonForVersion(pokemon, version);
+
+            // Only add to maps if data was processed
+            if (speciesOutput) {
+              // Add to species map
+              const speciesList = versionSpeciesListMap.get(version) || [];
+              speciesList.push(speciesOutput);
+              versionSpeciesListMap.set(version, speciesList);
+            }
+
+            if (formOutputs) {
+              // Add to form map
+              const formList = versionFormListMap.get(version) || [];
+              formList.push(...formOutputs);
+              versionFormListMap.set(version, formList);
+            }
+          },
         );
 
         await Promise.all(versionPromises);
@@ -173,6 +192,32 @@ export async function generatePokemonJson(): Promise<void> {
 
       // Process all Pokemon in this generation in parallel
       await Promise.all(pokemonPromises);
+    }
+
+    // Write the form lists
+    for (const [version, pokedex] of versionFormListMap) {
+      await fs.writeFile(
+        path.join(
+          POKEMON_OUTPUT_PATH,
+          PokemonVersionGroupData[version].id,
+          "lists",
+          "by-form.json",
+        ),
+        JSON.stringify(pokedex),
+      );
+    }
+
+    // Write the species lists
+    for (const [version, pokedex] of versionSpeciesListMap) {
+      await fs.writeFile(
+        path.join(
+          POKEMON_OUTPUT_PATH,
+          PokemonVersionGroupData[version].id,
+          "lists",
+          "by-species.json",
+        ),
+        JSON.stringify(pokedex),
+      );
     }
 
     console.log("Pokemon JSON generation complete!");

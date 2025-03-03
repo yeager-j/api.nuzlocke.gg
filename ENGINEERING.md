@@ -148,19 +148,31 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
   /v1
     /pokemon
       /red-blue      # Version-specific data
-        bulbasaur.json
-        ivysaur.json
+        /forms
+          bulbasaur.json
+          ivysaur.json
+        /species
+          bulbasaur.json
+          ivysaur.json
+        /lists
+          by-form.json
+          by-species.json
       /gold-silver
-        bulbasaur.json
+        /forms
+          bulbasaur.json
+        /species
+          bulbasaur.json
+        /lists
+          by-form.json
+          by-species.json
       /radical-red
-        bulbasaur.json
-    /lists           # Pre-computed list views
-      /by-game
-        red-blue.json
-        gold-silver.json
-      /by-generation
-        gen-1.json
-        gen-2.json
+        /forms
+          bulbasaur.json
+        /species
+          bulbasaur.json
+        /lists
+          by-form.json
+          by-species.json
 ```
 
 ### 5.3 Type Definitions
@@ -266,45 +278,16 @@ async function buildAll() {
 
 ### 7.2 Data Access Layer
 
-Simple file-based access with no caching (relying on CDN caching):
-
-```typescript
-async function readJsonFile<T>(filePath: string): Promise<T> {
-  try {
-    const fileContent = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(fileContent) as T;
-  } catch (error) {
-    throw new Error(`Failed to read JSON file: ${filePath}`);
-  }
-}
-
-export async function getPokemon(game: string, id: string): Promise<Pokemon> {
-  const filePath = path.join(
-    process.cwd(),
-    'public',
-    'data',
-    'pokemon',
-    game.toLowerCase(),
-    `${id.toLowerCase()}.json`
-  );
-  
-  try {
-    return await readJsonFile<Pokemon>(filePath);
-  } catch (error) {
-    throw new Error(`Pokemon not found: ${id} in ${game}`);
-  }
-}
-```
+Just access the JSON files! They're stored in the Next.js `/public` directory, which means the end user can simply
+access them like any other file.
 
 ### 7.3 API Endpoints
 
-The API will expose endpoints:
-
-- `GET /api/pokemon` - Get a master list of all Pokemon
-- `GET /api/pokemon/[id]` - Get a specific Pokemon
-- `GET /api/games/[game]/pokemon` - Get full Pokedex for a game
-- `GET /api/games/[game]/pokemon/[id]` - Get a specific Pokemon with data from that game
-- `GET /api/generation/[gen]` - Get Pokemon by generation
+The build script generates JSON and places them in `/public` in the following structure:
+- `/v1/pokemon/[version-group]/forms/[pokemon].json` - Use this to access a Pokemon
+- `/v1/pokemon/[version-group]/species/[pokemon].json` - Use this to access a Pokemon Species
+- `/v1/pokemon/[version-group]/lists/by-form.json` - Use this to access a list of Pokemon available in this version group
+- `/v1/pokemon/[version-group]/lists/by-species.json` - Use this to access a list of Pokemon Species available in this version group
 
 ### 7.4 Caching Strategy
 

@@ -1,4 +1,6 @@
-import { EvolutionTrigger } from "@/data/pokemon/common";
+import { EvolutionTrigger } from "@/data/evolution/common";
+import { EncounterMethod } from "@/data/locations/common";
+import { KantoLocation } from "@/data/locations/regions/kanto/locations";
 import {
   Pokemon,
   PokemonDefinition,
@@ -56,6 +58,23 @@ const Bulbasaur: Pokemon = {
       ],
       versions: [],
     },
+  },
+  encounters: {
+    default: [],
+    versions: [
+      {
+        appliesTo: [
+          PokemonVersionGroup.RED_BLUE,
+          PokemonVersionGroup.FIRERED_LEAFGREEN,
+        ],
+        value: [
+          {
+            method: EncounterMethod.GIFT,
+            location: KantoLocation.PALLET_TOWN,
+          },
+        ],
+      },
+    ],
   },
 };
 

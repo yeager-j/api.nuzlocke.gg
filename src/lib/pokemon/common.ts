@@ -9,3 +9,8 @@ export const POKEMON_DATA_PATH = path.join(
   process.cwd(),
   "src/data/pokemon/master",
 );
+
+export const LOCATION_OUTPUT_PATH = path.join(
+  process.cwd(),
+  "public/v1/locations",
+);

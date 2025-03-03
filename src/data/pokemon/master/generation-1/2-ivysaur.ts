@@ -1,4 +1,5 @@
-import { EvolutionTrigger } from "@/data/pokemon/common";
+import { EvolutionTrigger } from "@/data/evolution/common";
+import { EncounterMethod } from "@/data/locations/common";
 import {
   Pokemon,
   PokemonDefinition,
@@ -56,6 +57,14 @@ const Ivysaur: Pokemon = {
       ],
       versions: [],
     },
+  },
+  encounters: {
+    default: [
+      {
+        method: EncounterMethod.EVOLVE,
+      },
+    ],
+    versions: [],
   },
 };
 
