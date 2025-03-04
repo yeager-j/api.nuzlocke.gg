@@ -24,11 +24,8 @@ import {
   loadPokemon,
 } from "@/lib/pokemon/utils";
 
-async function ensureDirectories(
-  versionId: string,
-  gameId: string,
-): Promise<void> {
-  await fs.mkdir(path.join(LOCATION_OUTPUT_PATH, versionId, gameId), {
+async function ensureDirectories(gameId: string): Promise<void> {
+  await fs.mkdir(path.join(LOCATION_OUTPUT_PATH, gameId), {
     recursive: true,
   });
 }
@@ -110,14 +107,9 @@ export async function buildLocationApi(): Promise<void> {
         }
 
         for (const location of locations) {
-          await ensureDirectories(versionData.id, gameData.id);
+          await ensureDirectories(gameData.id);
           await fs.writeFile(
-            path.join(
-              LOCATION_OUTPUT_PATH,
-              versionData.id,
-              gameData.id,
-              `${location.id}.json`,
-            ),
+            path.join(LOCATION_OUTPUT_PATH, gameData.id, `${location.id}.json`),
             JSON.stringify(location),
           );
         }

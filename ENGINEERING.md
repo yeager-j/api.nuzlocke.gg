@@ -174,13 +174,12 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
           by-form.json
           by-species.json
     /locations
-      /red-blue
-        /blue
-          pallet-town.json
-          route-1.json
-        /red
-          pallet-town.json
-          route-1.json
+      /blue
+        pallet-town.json
+        route-1.json
+      /red
+        pallet-town.json
+        route-1.json
 ```
 
 ### 5.3 Type Definitions
@@ -232,7 +231,114 @@ export type FireRedLeafGreenEncounter = {
 export type Encounter = Evolve | RedBlueEncounter | FireRedLeafGreenEncounter;
 ```
 
-### 5.5 Build Pipeline
+### 5.5 Example Master Data
+
+Below is an example Master Data file containing data for Caterpie:
+
+```typescript
+const CaterpieSpecies: PokemonSpecies = {
+  name: "caterpie",
+  displayName: "Caterpie",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD],
+  nationalDexNumber: 10,
+};
+
+const CaterpieDefaultMode: PokemonMode = {
+  name: "caterpie",
+  displayName: "Caterpie",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD],
+  sprite:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+  isDefault: true,
+  types: {
+    default: ["Bug"],
+    versions: [],
+  },
+};
+
+const Caterpie: Pokemon = {
+  name: "caterpie",
+  displayName: "Caterpie",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD],
+  isDefault: true,
+  modes: [CaterpieDefaultMode],
+  evolution: {
+    from: "",
+    evolutionBranches: {
+      default: [
+        {
+          to: "metapod",
+          trigger: EvolutionTrigger.LEVEL_UP,
+          conditions: [{ type: "LEVEL", minLevel: 7 }],
+        },
+      ],
+      versions: [],
+    },
+  },
+  encounters: {
+    default: [],
+    versions: [
+      {
+        appliesTo: [PokemonVersionGroup.RED_BLUE],
+        value: [
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_2,
+            exclusiveTo: PokemonGame.BLUE,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_24,
+            exclusiveTo: PokemonGame.BLUE,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_25,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.VIRIDIAN_FOREST,
+          },
+        ],
+      },
+      {
+        appliesTo: [PokemonVersionGroup.FIRERED_LEAFGREEN],
+        value: [
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_2,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_24,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.ROUTE_25,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.PATTERN_BUSH,
+          },
+          {
+            method: EncounterMethod.TALL_GRASS,
+            location: KantoLocation.VIRIDIAN_FOREST,
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const definition: PokemonDefinition = {
+  species: CaterpieSpecies,
+  forms: [Caterpie],
+};
+
+export default definition;
+```
+
+### 5.6 Build Pipeline
 
 A build script will:
 1. Read all master TypeScript files
@@ -250,18 +356,18 @@ A build script will:
 ```
 ┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
 │                 │     │              │     │                 │
-│  Source Files   │────▶│  Build Step  │────▶│  Generated JSON │
-│  (TypeScript)   │     │              │     │  (Static Files) │
+│   Master Data   │────▶│  Build Step  │────▶│  Generated JSON │
+│   (TypeScript)  │     │              │     │  (Static Files) │
 │                 │     │              │     │                 │
 └─────────────────┘     └──────────────┘     └─────────────────┘
                                                       │
                                                       ▼
-┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
-│                 │     │              │     │                 │
-│   API Client    │◀───▶│   API Layer  │◀───▶│  CDN / Static   │
-│                 │     │ (Serverless) │     │  File Hosting   │
-│                 │     │              │     │                 │
-└─────────────────┘     └──────────────┘     └─────────────────┘
+┌─────────────────┐                          ┌─────────────────┐
+│                 │                          │                 │
+│   API Client    │◀────────────────────────▶│  CDN / Static   │
+│                 │                          │  File Hosting   │
+│                 │                          │                 │
+└─────────────────┘                          └─────────────────┘
 ```
 
 ## 7. Implementation Details
@@ -283,6 +389,7 @@ The build script generates JSON and places them in `/public` in the following st
 - `/v1/pokemon/[version-group]/species/[pokemon].json` - Use this to access a Pokémon Species
 - `/v1/pokemon/[version-group]/lists/by-form.json` - Use this to access a list of Pokémon available in this version group
 - `/v1/pokemon/[version-group]/lists/by-species.json` - Use this to access a list of Pokémon Species available in this version group
+- `/v1/locations/[game]/[location].json` - Lists all Pokémon that can be found at this location
 
 ### 7.4 Caching Strategy
 
@@ -354,9 +461,10 @@ The API will be complemented by a Next.js UI layer:
 - `/` - Home page with information about the API
 - `/pokemon` - Master list of all Pokémon
 - `/pokemon/[id]` - The most up-to-date individual Pokémon data
-- `/games/[game]` - Game Pokedex page
+- `/games/[game]/pokemon` - Game Pokedex page
 - `/games/[game]/pokemon/[id]` - Individual Pokémon page with data from that game
-- `/generation/[gen]` - Generation list page
+- `/games/[game]/locations` - Lists locations within a game
+- `/games/[game]/locations/[id]` - Lists Pokémon that can be found at this location
 - `/api-docs` - Interactive API documentation
 
 ### 10.2 Project Structure
