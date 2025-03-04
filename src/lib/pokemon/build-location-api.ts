@@ -20,6 +20,7 @@ import {
 import {
   applyVersionToPokemon,
   applyVersionToSpecies,
+  getPokemonListItem,
   loadPokemon,
 } from "@/lib/pokemon/utils";
 
@@ -32,6 +33,13 @@ async function ensureDirectories(
   });
 }
 
+/**
+ * Builds and generates location-specific JSON data for Pokémon based on various game versions and generations.
+ * This function processes Pokémon data, applies version transformations, maps encounters to locations,
+ * and writes JSON output files for each game and version group in the specified output directory.
+ *
+ * @return {Promise<void>} A promise that resolves when the location JSON data generation is complete, or rejects if an error occurs.
+ */
 export async function buildLocationApi(): Promise<void> {
   console.log("Starting location JSON generation...");
 
@@ -74,7 +82,7 @@ export async function buildLocationApi(): Promise<void> {
             .forEach((e) => {
               const encounters = encounterMap.get(e.location) || [];
               encounters.push({
-                pokemon: pokemonOutput,
+                pokemon: getPokemonListItem(pokemonOutput),
                 method: e.method,
                 exclusiveTo: e.exclusiveTo,
               });
@@ -87,12 +95,14 @@ export async function buildLocationApi(): Promise<void> {
         ([, gameData]) => gameData.versionGroup.includes(version),
       ) as [PokemonGame, PokemonGameMetadata][];
 
+      console.log("Writing location JSON for version: ", version);
       for (const [game, gameData] of gamesInVersionGroup) {
         const locations: LocationOutput[] = [];
 
         for (const [location, encounters] of encounterMap) {
           locations.push({
             id: PokemonLocationData[location].id,
+            name: PokemonLocationData[location].name,
             encounters: encounters.filter(
               (e) => !e.exclusiveTo || e.exclusiveTo.includes(game),
             ),
@@ -108,7 +118,7 @@ export async function buildLocationApi(): Promise<void> {
               gameData.id,
               `${location.id}.json`,
             ),
-            JSON.stringify(location, null, 4),
+            JSON.stringify(location),
           );
         }
       }

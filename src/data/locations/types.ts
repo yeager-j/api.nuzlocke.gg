@@ -7,11 +7,11 @@ export interface LocationMetadata {
   name: string;
 }
 
+export type PokemonLocation = KantoLocation;
+
 export type Evolve = {
   method: EncounterMethod.EVOLVE;
 };
-
-export type PokemonLocation = KantoLocation;
 
 export type RedBlueEncounter = {
   method: Exclude<EncounterMethod, EncounterMethod.EVOLVE>;

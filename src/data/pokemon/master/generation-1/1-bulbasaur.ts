@@ -45,6 +45,7 @@ const Bulbasaur: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [BulbasaurDefaultMode],
   evolution: {
     from: "",

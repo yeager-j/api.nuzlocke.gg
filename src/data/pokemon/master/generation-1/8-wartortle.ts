@@ -44,6 +44,7 @@ const Wartortle: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [WartortleDefaultMode],
   evolution: {
     from: "squirtle",

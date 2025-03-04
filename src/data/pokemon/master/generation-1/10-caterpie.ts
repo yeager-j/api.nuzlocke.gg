@@ -37,6 +37,7 @@ const Caterpie: Pokemon = {
   name: "caterpie",
   displayName: "Caterpie",
   availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD],
+  isDefault: true,
   modes: [CaterpieDefaultMode],
   evolution: {
     from: "",

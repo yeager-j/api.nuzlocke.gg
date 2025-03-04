@@ -1,4 +1,4 @@
-import { LocationMetadata, PokemonLocation } from "@/data/locations/types";
+import { LocationMetadata } from "@/data/locations/types";
 
 export enum KantoLocation {
   ROUTE_1 = "ROUTE_1",
@@ -93,7 +93,7 @@ export enum KantoLocation {
   WATER_PATH = "WATER_PATH",
 }
 
-export const KantoLocationData: Record<PokemonLocation, LocationMetadata> = {
+export const KantoLocationData: Record<KantoLocation, LocationMetadata> = {
   [KantoLocation.ROUTE_1]: {
     id: "route-1",
     name: "Route 1",

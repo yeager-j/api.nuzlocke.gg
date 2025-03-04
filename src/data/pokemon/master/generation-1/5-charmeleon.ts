@@ -44,6 +44,7 @@ const Charmeleon: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [CharmeleonDefaultMode],
   evolution: {
     from: "charmander",

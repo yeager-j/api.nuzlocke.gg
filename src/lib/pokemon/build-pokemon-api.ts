@@ -4,10 +4,17 @@ import path from "path";
 import { PokemonDefinition } from "@/data/pokemon/types";
 import { PokemonVersionGroup, PokemonVersionGroupData } from "@/data/versions";
 import { POKEMON_DATA_PATH, POKEMON_OUTPUT_PATH } from "@/lib/pokemon/common";
-import { PokemonOutput, PokemonSpeciesOutput } from "@/lib/pokemon/types";
+import {
+  PokemonListItem,
+  PokemonOutput,
+  PokemonSpeciesListItem,
+  PokemonSpeciesOutput,
+} from "@/lib/pokemon/types";
 import {
   applyVersionToPokemon,
   applyVersionToSpecies,
+  getPokemonListItem,
+  getPokemonSpeciesListItem,
   loadPokemon,
 } from "@/lib/pokemon/utils";
 
@@ -142,8 +149,8 @@ export async function buildPokemonApi(): Promise<void> {
   console.log("Starting Pokemon JSON generation...");
 
   try {
-    const versionFormListMap: VersionPokedexMap<PokemonOutput> = new Map();
-    const versionSpeciesListMap: VersionPokedexMap<PokemonSpeciesOutput> =
+    const versionFormListMap: VersionPokedexMap<PokemonListItem> = new Map();
+    const versionSpeciesListMap: VersionPokedexMap<PokemonSpeciesListItem> =
       new Map();
 
     // Get all generations
@@ -174,14 +181,14 @@ export async function buildPokemonApi(): Promise<void> {
             if (speciesOutput) {
               // Add to species map
               const speciesList = versionSpeciesListMap.get(version) || [];
-              speciesList.push(speciesOutput);
+              speciesList.push(getPokemonSpeciesListItem(speciesOutput));
               versionSpeciesListMap.set(version, speciesList);
             }
 
             if (formOutputs) {
               // Add to form map
               const formList = versionFormListMap.get(version) || [];
-              formList.push(...formOutputs);
+              formList.push(...formOutputs.map(getPokemonListItem));
               versionFormListMap.set(version, formList);
             }
           },

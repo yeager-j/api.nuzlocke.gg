@@ -74,6 +74,7 @@ const Venusaur: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [VenusaurDefaultMode, VenusaurMegaMode, VenusaurGMaxMode],
   evolution: {
     from: "ivysaur",

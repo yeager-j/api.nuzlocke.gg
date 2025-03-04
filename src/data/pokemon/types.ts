@@ -33,6 +33,7 @@ export type VersionedPokemonSpecies = Omit<PokemonSpecies, "availableIn">;
 
 export interface Pokemon extends PokemonCommon<PokemonFormName> {
   modes: PokemonMode[];
+  isDefault: boolean;
   evolution: Evolution;
   encounters: VersionedProperty<Encounter[]>;
 }

@@ -45,6 +45,7 @@ const Charmander: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [CharmanderDefaultMode],
   evolution: {
     from: "",

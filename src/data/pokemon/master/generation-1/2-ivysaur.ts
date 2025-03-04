@@ -44,6 +44,7 @@ const Ivysaur: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [IvysaurDefaultMode],
   evolution: {
     from: "bulbasaur",

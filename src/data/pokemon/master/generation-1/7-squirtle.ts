@@ -45,6 +45,7 @@ const Squirtle: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [SquirtleDefaultMode],
   evolution: {
     from: "",

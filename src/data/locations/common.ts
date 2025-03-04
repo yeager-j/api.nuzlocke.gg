@@ -1,4 +1,5 @@
 import { KantoLocationData } from "@/data/locations/regions/kanto/locations";
+import { LocationMetadata, PokemonLocation } from "@/data/locations/types";
 
 export enum EncounterMethod {
   TALL_GRASS = "TALL_GRASS",
@@ -22,6 +23,6 @@ export const EncounterMethodNames = {
   [EncounterMethod.EVOLVE]: "Evolution",
 };
 
-export const PokemonLocationData = {
+export const PokemonLocationData: Record<PokemonLocation, LocationMetadata> = {
   ...KantoLocationData,
 };

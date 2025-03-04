@@ -1,4 +1,5 @@
 import path from "path";
+import pick from "lodash-es/pick";
 
 import {
   Pokemon,
@@ -12,6 +13,12 @@ import {
 import { VersionedProperty } from "@/data/types";
 import { PokemonVersionGroup } from "@/data/versions";
 import { POKEMON_DATA_PATH } from "@/lib/pokemon/common";
+import {
+  PokemonListItem,
+  PokemonOutput,
+  PokemonSpeciesListItem,
+  PokemonSpeciesOutput,
+} from "@/lib/pokemon/types";
 
 /**
  * Asynchronously loads a Pokémon definition file based on the specified generation and master file name.
@@ -95,6 +102,7 @@ export function applyVersionToPokemon(
   return {
     name: pokemonForm.name,
     displayName: pokemonForm.displayName,
+    isDefault: pokemonForm.isDefault,
     modes: pokemonForm.modes
       .filter((mode) => mode.availableIn.includes(version))
       .map((mode) => applyVersionToPokemonMode(mode, version)),
@@ -116,5 +124,57 @@ export function applyVersionToSpecies(
     name: pokemonSpecies.name,
     displayName: pokemonSpecies.displayName,
     nationalDexNumber: pokemonSpecies.nationalDexNumber,
+  };
+}
+
+/**
+ * Converts a PokemonOutput object into a simplified PokemonListItem object.
+ *
+ * @param {PokemonOutput} pokemon - The Pokemon data object to transform.
+ * @return {PokemonListItem} A simplified object containing key information about the Pokemon.
+ * @throws {Error} If no default mode is found for the Pokemon.
+ */
+export function getPokemonListItem(pokemon: PokemonOutput): PokemonListItem {
+  const defaultMode = pokemon.modes.find((m) => m.isDefault);
+
+  if (!defaultMode) {
+    throw new Error("No default mode found for Pokemon");
+  }
+
+  return {
+    ...pick(pokemon, ["name", "displayName", "evolution", "isDefault"]),
+    sprite: defaultMode.sprite,
+    types: defaultMode.types,
+    nationalDexNumber: pokemon.species.nationalDexNumber,
+  };
+}
+
+/**
+ * Converts a `PokemonSpeciesOutput` object into a simplified `PokemonSpeciesListItem` object.
+ *
+ * @param {PokemonSpeciesOutput} pokemon - The Pokemon species data containing forms, modes, and other details.
+ * @return {PokemonSpeciesListItem} A simplified object containing essential properties like name, sprite, types, and others.
+ * @throws {Error} Throws an error if no default form or default mode is found for the provided Pokemon species.
+ */
+export function getPokemonSpeciesListItem(
+  pokemon: PokemonSpeciesOutput,
+): PokemonSpeciesListItem {
+  const defaultForm = pokemon.forms.find((f) => f.isDefault);
+
+  if (!defaultForm) {
+    throw new Error("No default form found for Pokemon species");
+  }
+
+  const defaultMode = defaultForm.modes.find((m) => m.isDefault);
+
+  if (!defaultMode) {
+    throw new Error("No default mode found for Pokemon");
+  }
+
+  return {
+    ...pick(pokemon, ["name", "displayName", "nationalDexNumber"]),
+    sprite: defaultMode.sprite,
+    types: defaultMode.types,
+    evolution: defaultForm.evolution,
   };
 }

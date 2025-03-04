@@ -1,16 +1,16 @@
-# Pokemon API Engineering Design Document
+# Pokémon API Engineering Design Document
 
 ## 1. Introduction
 
-This document outlines the design of a Pokemon API that provides data for Pokemon across multiple game versions, including official games and ROM hacks like Radical Red and Unbound. The API needs to efficiently serve both list views and detailed Pokemon data with version-specific variations.
+This document outlines the design of a Pokémon API that provides data for Pokémon across multiple game versions, including official games and ROM hacks like Radical Red and Unbound. The API needs to efficiently serve both list views and detailed Pokémon data with version-specific variations.
 
 ## 2. Problem Statement
 
-We need to create an API that can:
+I need to create an API that can:
 
-1. Serve data for 1000+ Pokemon across multiple game versions
-2. Handle version-specific variations in Pokemon stats, abilities, types, and movesets
-3. Support both list queries (by generation, game) and individual Pokemon lookup
+1. Serve data for 1000+ Pokémon across multiple game versions
+2. Handle version-specific variations in Pokémon stats, abilities, types, and movesets
+3. Support both list queries (by generation, game) and individual Pokémon lookup
 4. Perform well in a serverless environment
 5. Minimize runtime processing and computational overhead
 6. Maintain type safety and data integrity during development
@@ -22,12 +22,12 @@ The central challenge is managing the complex versioned data structure while pro
 
 ### 3.1 Functional Requirements
 
-- Support lookup of individual Pokemon with correct game-specific data
+- Support lookup of individual Pokémon with correct game-specific data
 - Support list queries (by generation, game version)
 - Maintain complete type safety in source code
-- Allow for easy addition of new Pokemon and game versions
+- Allow for easy addition of new Pokémon and game versions
 - Support versioned properties (stats, types, moves, abilities)
-- Support multiple Pokemon modes/forms
+- Support multiple Pokémon modes/forms
 
 ### 3.2 Non-Functional Requirements
 
@@ -40,13 +40,13 @@ The central challenge is managing the complex versioned data structure while pro
 
 ## 4. Rejected Solutions
 
-### 4.1 Individual JSON Files for Each Pokemon (Not Version-Specific)
+### 4.1 Individual JSON Files for Each Pokémon (Not Version-Specific)
 
-**Approach:** Store each Pokemon in a single JSON file with all version data.
+**Approach:** Store each Pokémon in a single JSON file with all version data.
 
 **Pros:**
 - Simple, well-organized structure
-- Easy to update individual Pokemon
+- Easy to update individual Pokémon
 - Works with standard file systems
 
 **Cons:**
@@ -56,9 +56,9 @@ The central challenge is managing the complex versioned data structure while pro
 
 **Rejection Reason:** Poor performance for list operations; requires runtime transformation.
 
-### 4.2 Single JSON File for All Pokemon
+### 4.2 Single JSON File for All Pokémon
 
-**Approach:** Store all Pokemon data in a single large JSON file.
+**Approach:** Store all Pokémon data in a single large JSON file.
 
 **Pros:**
 - Single file read for any query
@@ -75,7 +75,7 @@ The central challenge is managing the complex versioned data structure while pro
 
 ### 4.3 TypeScript Storage Only
 
-**Approach:** Keep all Pokemon data in TypeScript with no JSON.
+**Approach:** Keep all Pokémon data in TypeScript with no JSON.
 
 **Pros:**
 - Maximum type safety
@@ -91,7 +91,7 @@ The central challenge is managing the complex versioned data structure while pro
 
 ### 4.4 Database Storage (Serverless Postgres)
 
-**Approach:** Store Pokemon data in a serverless database like NeonDB.
+**Approach:** Store Pokémon data in a serverless database like NeonDB.
 
 **Pros:**
 - Powerful query capabilities
@@ -128,8 +128,8 @@ The central challenge is managing the complex versioned data structure while pro
 
 Our solution uses a build-time denormalization pattern with hierarchical data organization:
 
-1. Store master Pokemon data as TypeScript files with versioned properties
-2. At build time, generate version-specific JSON files for each Pokemon and game
+1. Store master Pokémon data as TypeScript files with versioned properties
+2. At build time, generate version-specific JSON files for each Pokémon and game
 3. Also generate pre-computed list files for common queries (by game, by generation)
 4. Serve these static files from CDN/serverless hosting
 5. Rely on Vercel's CDN for caching rather than implementing application-level caching
@@ -143,7 +143,7 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
       /generation-1
         1-bulbasaur.ts
         2-ivysaur.ts
-        # All Pokemon with full versioned data
+        # All Pokémon with full versioned data
 /public
   /v1
     /pokemon
@@ -173,6 +173,14 @@ Our solution uses a build-time denormalization pattern with hierarchical data or
         /lists
           by-form.json
           by-species.json
+    /locations
+      /red-blue
+        /blue
+          pallet-town.json
+          route-1.json
+        /red
+          pallet-town.json
+          route-1.json
 ```
 
 ### 5.3 Type Definitions
@@ -195,18 +203,45 @@ export interface Pokemon {
   species: PokemonSpecies;
   modes: PokemonMode[];
   evolution: Evolution;
+  encounters: VersionedProperty<Encounter[]>;
 }
 ```
 
-### 5.4 Build Pipeline
+### 5.4 Encounter Data
+
+Instead of storing encounter data separately, this should be stored in the Pokémon master data using the `VersionedProperty` API.
+Then at the build step, the encounters are extracted and each location in a game is populated with those encounters.
+
+```typescript
+export type Evolve = {
+  method: EncounterMethod.EVOLVE;
+};
+
+export type RedBlueEncounter = {
+  method: Exclude<EncounterMethod, EncounterMethod.EVOLVE>;
+  location: KantoLocation;
+  exclusiveTo?: PokemonGame.RED | PokemonGame.BLUE;
+};
+
+export type FireRedLeafGreenEncounter = {
+  method: Exclude<EncounterMethod, EncounterMethod.EVOLVE>;
+  location: KantoLocation;
+  exclusiveTo?: PokemonGame.FIRE_RED | PokemonGame.LEAF_GREEN;
+};
+
+export type Encounter = Evolve | RedBlueEncounter | FireRedLeafGreenEncounter;
+```
+
+### 5.5 Build Pipeline
 
 A build script will:
 1. Read all master TypeScript files
-2. For each Pokemon and game version, extract the appropriate data
-3. Write version-specific JSON files for individual Pokemon
+2. For each Pokémon and game version, extract the appropriate data
+3. Write version-specific JSON files for individual Pokémon
 4. Generate pre-computed list files:
     - By game version (red-blue.json, gold-silver.json, etc.)
     - By generation (gen-1.json, gen-2.json, etc.)
+5. Write game-specific JSON files for each Location containing the encounters
 
 ## 6. System Architecture
 
@@ -229,52 +264,12 @@ A build script will:
 └─────────────────┘     └──────────────┘     └─────────────────┘
 ```
 
-### 6.2 Request Flow
-
-1. Client requests `/api/games/radical-red/pokemon/bulbasaur`
-2. Request is routed to API function
-3. If the CDN has a cached response, it returns it immediately
-4. Otherwise, the API function reads `/public/v1/pokemon/radical-red/bulbasaur.json`
-5. JSON is returned to client (cached in CDN for future requests)
-
 ## 7. Implementation Details
 
 ### 7.1 Build Script
-
-The build process will:
-
-```typescript
-async function buildAll() {
-  // 1. Load all master Pokemon data
-  const masterPokemon = await loadMasterData();
-  
-  // 2. Generate version-specific files
-  for (const pokemon of masterPokemon) {
-    for (const gameVersion of allGameVersions) {
-      const versionSpecific = transformToGameVersion(pokemon, gameVersion);
-      await writeVersionSpecificFile(versionSpecific, gameVersion);
-    }
-  }
-  
-  // 3. Generate list files
-  
-  // By game version
-  for (const gameVersion of allGameVersions) {
-    await generateGameList(gameVersion);
-  }
-  
-  // By generation
-  const generations = {
-    1: { min: 1, max: 151, games: ["RED_BLUE", "YELLOW"] },
-    2: { min: 152, max: 251, games: ["GOLD_SILVER", "CRYSTAL"] },
-    // etc...
-  };
-  
-  for (const [gen, range] of Object.entries(generations)) {
-    await generateGenerationList(gen, range);
-  }
-}
-```
+A TypeScript build script in `/scripts/build.ts` will be ran using the NPM command `npm run build:deploy`. The build
+script will call functions in `/src/lib/pokemon` such as `buildPokemonApi()` and `buildLocationApi()` to generate
+the JSON files.
 
 ### 7.2 Data Access Layer
 
@@ -284,10 +279,10 @@ access them like any other file.
 ### 7.3 API Endpoints
 
 The build script generates JSON and places them in `/public` in the following structure:
-- `/v1/pokemon/[version-group]/forms/[pokemon].json` - Use this to access a Pokemon
-- `/v1/pokemon/[version-group]/species/[pokemon].json` - Use this to access a Pokemon Species
-- `/v1/pokemon/[version-group]/lists/by-form.json` - Use this to access a list of Pokemon available in this version group
-- `/v1/pokemon/[version-group]/lists/by-species.json` - Use this to access a list of Pokemon Species available in this version group
+- `/v1/pokemon/[version-group]/forms/[pokemon].json` - Use this to access a Pokémon
+- `/v1/pokemon/[version-group]/species/[pokemon].json` - Use this to access a Pokémon Species
+- `/v1/pokemon/[version-group]/lists/by-form.json` - Use this to access a list of Pokémon available in this version group
+- `/v1/pokemon/[version-group]/lists/by-species.json` - Use this to access a list of Pokémon Species available in this version group
 
 ### 7.4 Caching Strategy
 
@@ -297,13 +292,31 @@ The build script generates JSON and places them in `/public` in the following st
     - `s-maxage=604800` (CDN caches for 1 week)
     - `max-age=86400` (Browsers cache for 1 day)
 
+### 7.5 Security
+
+The complexity of this app is entirely at the build step and as of now there is zero runtime. All the data is served
+via a CDN and is static and immutable. The app has no user input and requires no authentication to access the data.
+Deployment is handled by Vercel, which is secured behind GitHub OAuth and MFA. All of these factors means there are 
+essentially no attack vectors.
+
+#### Future Considerations
+
+It's possible that I'll decide to add a GraphQL API in the future. In this case, security features such as rate-limiting
+will be evaluated but will likely prove unnecessary due to how lightweight the API is.
+
+### 7.6 Operational Longevity & Versioning
+
+Any breaking changes will be introduced via additional API versions (e.g. `/api/v2`) as is industry standard. As for
+the introduction of additional data, rebuilding the JSON files will never take more than 30 minutes and should only
+be necessary when new Pokémon games come out around once a year, or I decide to support an additional ROM Hack.
+
 ## 8. Performance Considerations
 
 ### 8.1 File Size Analysis
 
-- Average single Pokemon JSON: <1kb
+- Average single Pokémon JSON: <1kb
 - List JSON files: ~50-100KB
-- Total storage for 1000 Pokemon × 18 game versions: ~25MB
+- Total storage for 1000 Pokémon × 18 game versions: ~25MB
 
 ### 8.2 Expected Performance
 
@@ -339,10 +352,10 @@ The build script generates JSON and places them in `/public` in the following st
 The API will be complemented by a Next.js UI layer:
 
 - `/` - Home page with information about the API
-- `/pokemon` - Master list of all Pokemon
-- `/pokemon/[id]` - The most up-to-date individual Pokemon data
+- `/pokemon` - Master list of all Pokémon
+- `/pokemon/[id]` - The most up-to-date individual Pokémon data
 - `/games/[game]` - Game Pokedex page
-- `/games/[game]/pokemon/[id]` - Individual Pokemon page with data from that game
+- `/games/[game]/pokemon/[id]` - Individual Pokémon page with data from that game
 - `/generation/[gen]` - Generation list page
 - `/api-docs` - Interactive API documentation
 
@@ -358,7 +371,7 @@ pokemon-api/
 │   ├── lib/                       # Shared utilities
 │   └── scripts/                   # Build scripts
 ├── public/
-│   ├── data/                      # Generated JSON data
+│   ├── v1/                        # Generated JSON data
 │   └── images/                    # Static images
 ```
 
@@ -366,7 +379,7 @@ pokemon-api/
 
 ### 11.1 Potential Enhancements
 
-- **Support for Pokemon learnsets with version-specific data**
+- **Support for Pokémon learnsets with version-specific data**
 - Additional list types (by type, by ability) if demand exists
 - GraphQL API layer for more flexible queries
 - Advanced search capabilities

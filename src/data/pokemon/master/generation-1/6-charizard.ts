@@ -87,6 +87,7 @@ const Charizard: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [
     CharizardDefaultMode,
     CharizardMegaXMode,

@@ -74,6 +74,7 @@ const Blastoise: Pokemon = {
     PokemonVersionGroup.SWORD_SHIELD,
     PokemonVersionGroup.SCARLET_VIOLET,
   ],
+  isDefault: true,
   modes: [BlastoiseDefaultMode, BlastoiseMegaMode, BlastoiseGMaxMode],
   evolution: {
     from: "wartortle",
