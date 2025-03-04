@@ -13,5 +13,5 @@ Until the UI is fully built out, below are a couple examples of the data I've ma
 - [Pokémon Platinum's Pokédex](https://api.nuzlocke.gg/v1/pokemon/platinum/lists/by-species.json)
 
 ### Locations & Encounters
-- [Pallet Town Encounters in Pokémon Red](https://api.nuzlocke.gg/v1/locations/red-blue/red/pallet-town.json)
-- [Viridian Forest Encounters in Pokémon LeafGreen](https://api.nuzlocke.gg/v1/locations/firered-leafgreen/leafgreen/viridian-forest.json)
+- [Pallet Town Encounters in Pokémon Red](https://api.nuzlocke.gg/v1/locations/red/pallet-town.json)
+- [Viridian Forest Encounters in Pokémon LeafGreen](https://api.nuzlocke.gg/v1/locations/leafgreen/viridian-forest.json)
