@@ -9,7 +9,6 @@ import {
   PokemonGame,
   PokemonGameData,
   PokemonVersionGroup,
-  PokemonVersionGroupData,
 } from "@/data/versions";
 import { LOCATION_OUTPUT_PATH, POKEMON_DATA_PATH } from "@/lib/pokemon/common";
 import {
@@ -61,7 +60,6 @@ export async function buildLocationApi(): Promise<void> {
     for (const version of Object.values(PokemonVersionGroup)) {
       console.log("Processing version: ", version);
 
-      const versionData = PokemonVersionGroupData[version];
       const encounterMap: Map<PokemonLocation, PokemonEncounter[]> = new Map();
 
       for (const definition of pokemonDefinitions) {
