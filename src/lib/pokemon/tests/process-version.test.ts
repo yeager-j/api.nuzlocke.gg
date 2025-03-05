@@ -2,7 +2,8 @@ import path from "path";
 import { vol } from "memfs";
 import { beforeAll, describe, test, vi } from "vitest";
 
-import CharizardDefinition from "@/data/pokemon/master/generation-1/6-charizard";
+import CharizardDefinition from "./__fixtures__/mock-charizard";
+
 import { PokemonVersionGroup, PokemonVersionGroupData } from "@/data/versions";
 import { processPokemonForVersion } from "@/lib/pokemon/build-pokemon-api";
 import { POKEMON_OUTPUT_PATH } from "@/lib/pokemon/common";

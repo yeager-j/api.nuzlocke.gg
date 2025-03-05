@@ -1,0 +1,438 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildPokemonApi integration > should build bulbasaur > bulbasaur-form-rb 1`] = `
+{
+  "displayName": "Bulbasaur",
+  "encounters": [
+    {
+      "location": "PALLET_TOWN",
+      "method": "GIFT",
+    },
+  ],
+  "evolution": {
+    "evolutionBranches": [
+      {
+        "conditions": [
+          {
+            "minLevel": 16,
+            "type": "LEVEL",
+          },
+        ],
+        "to": "ivysaur",
+        "trigger": "LEVEL_UP",
+      },
+    ],
+    "from": "",
+  },
+  "isDefault": true,
+  "modes": [
+    {
+      "displayName": "Bulbasaur",
+      "isDefault": true,
+      "name": "bulbasaur",
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      "types": [
+        "Grass",
+        "Poison",
+      ],
+    },
+  ],
+  "name": "bulbasaur",
+  "species": {
+    "displayName": "Bulbasaur",
+    "name": "bulbasaur",
+    "nationalDexNumber": 1,
+  },
+}
+`;
+
+exports[`buildPokemonApi integration > should build bulbasaur > bulbasaur-species-rb 1`] = `
+{
+  "displayName": "Bulbasaur",
+  "forms": [
+    {
+      "displayName": "Bulbasaur",
+      "encounters": [
+        {
+          "location": "PALLET_TOWN",
+          "method": "GIFT",
+        },
+      ],
+      "evolution": {
+        "evolutionBranches": [
+          {
+            "conditions": [
+              {
+                "minLevel": 16,
+                "type": "LEVEL",
+              },
+            ],
+            "to": "ivysaur",
+            "trigger": "LEVEL_UP",
+          },
+        ],
+        "from": "",
+      },
+      "isDefault": true,
+      "modes": [
+        {
+          "displayName": "Bulbasaur",
+          "isDefault": true,
+          "name": "bulbasaur",
+          "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+          "types": [
+            "Grass",
+            "Poison",
+          ],
+        },
+      ],
+      "name": "bulbasaur",
+    },
+  ],
+  "name": "bulbasaur",
+  "nationalDexNumber": 1,
+}
+`;
+
+exports[`buildPokemonApi integration > should build charmander > charmander-form-rb 1`] = `
+{
+  "displayName": "Charmander",
+  "encounters": [
+    {
+      "location": "PALLET_TOWN",
+      "method": "GIFT",
+    },
+  ],
+  "evolution": {
+    "evolutionBranches": [
+      {
+        "conditions": [
+          {
+            "minLevel": 16,
+            "type": "LEVEL",
+          },
+        ],
+        "to": "charmeleon",
+        "trigger": "LEVEL_UP",
+      },
+    ],
+    "from": "",
+  },
+  "isDefault": true,
+  "modes": [
+    {
+      "displayName": "Charmander",
+      "isDefault": true,
+      "name": "charmander",
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+      "types": [
+        "Fire",
+      ],
+    },
+  ],
+  "name": "charmander",
+  "species": {
+    "displayName": "Charmander",
+    "name": "charmander",
+    "nationalDexNumber": 4,
+  },
+}
+`;
+
+exports[`buildPokemonApi integration > should build charmander > charmander-species-rb 1`] = `
+{
+  "displayName": "Charmander",
+  "forms": [
+    {
+      "displayName": "Charmander",
+      "encounters": [
+        {
+          "location": "PALLET_TOWN",
+          "method": "GIFT",
+        },
+      ],
+      "evolution": {
+        "evolutionBranches": [
+          {
+            "conditions": [
+              {
+                "minLevel": 16,
+                "type": "LEVEL",
+              },
+            ],
+            "to": "charmeleon",
+            "trigger": "LEVEL_UP",
+          },
+        ],
+        "from": "",
+      },
+      "isDefault": true,
+      "modes": [
+        {
+          "displayName": "Charmander",
+          "isDefault": true,
+          "name": "charmander",
+          "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+          "types": [
+            "Fire",
+          ],
+        },
+      ],
+      "name": "charmander",
+    },
+  ],
+  "name": "charmander",
+  "nationalDexNumber": 4,
+}
+`;
+
+exports[`buildPokemonApi integration > should build squirtle > squirtle-form-rb 1`] = `
+{
+  "displayName": "Squirtle",
+  "encounters": [
+    {
+      "location": "PALLET_TOWN",
+      "method": "GIFT",
+    },
+  ],
+  "evolution": {
+    "evolutionBranches": [
+      {
+        "conditions": [
+          {
+            "minLevel": 16,
+            "type": "LEVEL",
+          },
+        ],
+        "to": "wartortle",
+        "trigger": "LEVEL_UP",
+      },
+    ],
+    "from": "",
+  },
+  "isDefault": true,
+  "modes": [
+    {
+      "displayName": "Squirtle",
+      "isDefault": true,
+      "name": "squirtle",
+      "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+      "types": [
+        "Water",
+      ],
+    },
+  ],
+  "name": "squirtle",
+  "species": {
+    "displayName": "Squirtle",
+    "name": "squirtle",
+    "nationalDexNumber": 7,
+  },
+}
+`;
+
+exports[`buildPokemonApi integration > should build squirtle > squirtle-species-rb 1`] = `
+{
+  "displayName": "Squirtle",
+  "forms": [
+    {
+      "displayName": "Squirtle",
+      "encounters": [
+        {
+          "location": "PALLET_TOWN",
+          "method": "GIFT",
+        },
+      ],
+      "evolution": {
+        "evolutionBranches": [
+          {
+            "conditions": [
+              {
+                "minLevel": 16,
+                "type": "LEVEL",
+              },
+            ],
+            "to": "wartortle",
+            "trigger": "LEVEL_UP",
+          },
+        ],
+        "from": "",
+      },
+      "isDefault": true,
+      "modes": [
+        {
+          "displayName": "Squirtle",
+          "isDefault": true,
+          "name": "squirtle",
+          "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+          "types": [
+            "Water",
+          ],
+        },
+      ],
+      "name": "squirtle",
+    },
+  ],
+  "name": "squirtle",
+  "nationalDexNumber": 7,
+}
+`;
+
+exports[`buildPokemonApi integration > should build the list files > form-list-rb 1`] = `
+[
+  {
+    "displayName": "Bulbasaur",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "ivysaur",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "isDefault": true,
+    "name": "bulbasaur",
+    "nationalDexNumber": 1,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    "types": [
+      "Grass",
+      "Poison",
+    ],
+  },
+  {
+    "displayName": "Charmander",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "charmeleon",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "isDefault": true,
+    "name": "charmander",
+    "nationalDexNumber": 4,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    "types": [
+      "Fire",
+    ],
+  },
+  {
+    "displayName": "Squirtle",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "wartortle",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "isDefault": true,
+    "name": "squirtle",
+    "nationalDexNumber": 7,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    "types": [
+      "Water",
+    ],
+  },
+]
+`;
+
+exports[`buildPokemonApi integration > should build the list files > species-list-rb 1`] = `
+[
+  {
+    "displayName": "Bulbasaur",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "ivysaur",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "name": "bulbasaur",
+    "nationalDexNumber": 1,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    "types": [
+      "Grass",
+      "Poison",
+    ],
+  },
+  {
+    "displayName": "Charmander",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "charmeleon",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "name": "charmander",
+    "nationalDexNumber": 4,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+    "types": [
+      "Fire",
+    ],
+  },
+  {
+    "displayName": "Squirtle",
+    "evolution": {
+      "evolutionBranches": [
+        {
+          "conditions": [
+            {
+              "minLevel": 16,
+              "type": "LEVEL",
+            },
+          ],
+          "to": "wartortle",
+          "trigger": "LEVEL_UP",
+        },
+      ],
+      "from": "",
+    },
+    "name": "squirtle",
+    "nationalDexNumber": 7,
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+    "types": [
+      "Water",
+    ],
+  },
+]
+`;

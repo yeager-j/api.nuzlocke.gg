@@ -1,0 +1,121 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildLocationApi integration > should build the location files 1`] = `
+{
+  "encounters": [
+    {
+      "exclusiveTo": "BLUE",
+      "method": "TALL_GRASS",
+      "pokemon": {
+        "displayName": "Caterpie",
+        "evolution": {
+          "evolutionBranches": [
+            {
+              "conditions": [
+                {
+                  "minLevel": 7,
+                  "type": "LEVEL",
+                },
+              ],
+              "to": "metapod",
+              "trigger": "LEVEL_UP",
+            },
+          ],
+          "from": "",
+        },
+        "isDefault": true,
+        "name": "caterpie",
+        "nationalDexNumber": 10,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        "types": [
+          "Bug",
+        ],
+      },
+    },
+  ],
+  "id": "route-2",
+  "name": "Route 2",
+}
+`;
+
+exports[`buildLocationApi integration > should build the location files 2`] = `
+{
+  "encounters": [],
+  "id": "route-2",
+  "name": "Route 2",
+}
+`;
+
+exports[`buildLocationApi integration > should build the location files 3`] = `
+{
+  "encounters": [
+    {
+      "method": "TALL_GRASS",
+      "pokemon": {
+        "displayName": "Caterpie",
+        "evolution": {
+          "evolutionBranches": [
+            {
+              "conditions": [
+                {
+                  "minLevel": 7,
+                  "type": "LEVEL",
+                },
+              ],
+              "to": "metapod",
+              "trigger": "LEVEL_UP",
+            },
+          ],
+          "from": "",
+        },
+        "isDefault": true,
+        "name": "caterpie",
+        "nationalDexNumber": 10,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        "types": [
+          "Bug",
+        ],
+      },
+    },
+  ],
+  "id": "viridian-forest",
+  "name": "Viridian Forest",
+}
+`;
+
+exports[`buildLocationApi integration > should build the location files 4`] = `
+{
+  "encounters": [
+    {
+      "method": "TALL_GRASS",
+      "pokemon": {
+        "displayName": "Caterpie",
+        "evolution": {
+          "evolutionBranches": [
+            {
+              "conditions": [
+                {
+                  "minLevel": 7,
+                  "type": "LEVEL",
+                },
+              ],
+              "to": "metapod",
+              "trigger": "LEVEL_UP",
+            },
+          ],
+          "from": "",
+        },
+        "isDefault": true,
+        "name": "caterpie",
+        "nationalDexNumber": 10,
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        "types": [
+          "Bug",
+        ],
+      },
+    },
+  ],
+  "id": "viridian-forest",
+  "name": "Viridian Forest",
+}
+`;
