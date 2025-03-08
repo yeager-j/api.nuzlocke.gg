@@ -126,7 +126,7 @@ The central challenge is managing the complex versioned data structure while pro
 
 ### 5.1 Overview
 
-Our solution uses a build-time denormalization pattern with hierarchical data organization:
+My solution uses a build-time denormalization pattern with hierarchical data organization:
 
 1. Store master Pokémon data as TypeScript files with versioned properties
 2. At build time, generate version-specific JSON files for each Pokémon and game
@@ -414,8 +414,9 @@ will be evaluated but will likely prove unnecessary due to how lightweight the A
 ### 7.6 Operational Longevity & Versioning
 
 Any breaking changes will be introduced via additional API versions (e.g. `/api/v2`) as is industry standard. As for
-the introduction of additional data, rebuilding the JSON files will never take more than 30 minutes and should only
-be necessary when new Pokémon games come out around once a year, or I decide to support an additional ROM Hack.
+the introduction of additional data, rebuilding the JSON files will never take more than 1 minute (see section on benchmarking)
+and therefore can happen as part of the normal CI pipeline. At these speeds, there is no need for incremental builds
+based on whichever Pokémon got updated.
 
 ## 8. Performance Considerations
 
@@ -437,6 +438,39 @@ be necessary when new Pokémon games come out around once a year, or I decide to
 - Load independent of dataset size due to pre-computation
 - New game versions add linearly to build time but don't affect runtime
 
+## 8.4 Build Performance Analysis
+
+I've conducted detailed benchmarks to understand build scaling characteristics:
+
+| Pokemon Count | Local Dev (M2 MacBook) | Projected CI Environment* |
+|---------------|------------------------|---------------------------|
+| 10            | 13ms                   | ~130ms                    |
+| 50            | 57ms                   | ~570ms                    |
+| 100           | 122ms                  | ~1.2s                     |
+| 200           | 249ms                  | ~2.5s                     |
+| 500           | 614ms                  | ~6.1s                     |
+| 1000          | 1,227ms                | ~12.3s                    |
+([source](src/lib/pokemon/tests/benchmark/build-scaling.bench.ts))
+
+*Projection assumes CI environment is approximately 10x slower than local development hardware based on typical cloud
+compute resource comparisons.
+
+These benchmarks show near-linear scaling (R² = 0.999) with Pokémon count. Even with conservative estimates for Vercel's
+build environment (10x slower than development hardware), full builds remain well under one minute, posing no
+operational concerns. However, the Master data is incomplete; the encounter data is only created for the Kanto region.
+Encounter data is bulky and could end up doubling these projections, but even a 1-minute build time is inconsequential.
+
+### Verification Strategy
+
+To verify these projections, I will:
+1. Record actual build times from the first 10 production builds on Vercel
+2. Establish a baseline performance envelope with upper and lower bounds
+3. Configure build monitoring to alert if performance deviates from expected ranges
+
+For context, the build time remains inconsequential even if actual performance is 20x worse than local benchmarks
+(~25 seconds), requiring no special optimization strategy or incremental build considerations. For context, it takes
+21 seconds for Vercel to build and deploy the starter Hello World Next.js app.
+
 ## 9. Deployment & Testing
 
 ### 9.1 Deployment Process
@@ -451,6 +485,13 @@ be necessary when new Pokémon games come out around once a year, or I decide to
 - Snapshot tests for generated JSON structure
 - Integration tests for API endpoints
 - Performance tests for response time benchmarks
+
+### 9.3 Failure Modes
+
+Given the static nature of this API, traditional runtime failure modes are largely eliminated. The primary failure
+scenarios include build process failures, CDN/hosting failures, and data integrity failures.
+
+I can mitigate build process failures by writing a comprehensive suite of tests. 
 
 ## 10. UI Layer
 
@@ -495,9 +536,15 @@ pokemon-api/
 
 ### 11.2 Monitoring & Observability
 
-- Track API usage patterns to optimize pre-computed lists
-- Monitor file sizes and build times
-- Track CDN hit rates
+Due to the static nature of this API with no runtime logic, traditional monitoring and observability concerns are
+minimized. However, I can implement basic monitoring around the build process and CDN delivery metrics to ensure the API
+maintains high availability and performance.
+
+### 11.3 Data Integrity
+- Create tests to validate the Pokémon master data, e.g.:
+  - All evolution chains are valid
+  - All Pokémon have at least one encounter
+  - All Pokémon have a species, a form, and a mode
 
 ## 12. Conclusion
 
