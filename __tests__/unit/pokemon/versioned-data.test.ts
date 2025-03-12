@@ -1,9 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { getVersionedData } from "../utils";
-
 import { VersionedProperty } from "@/data/types";
 import { PokemonVersionGroup } from "@/data/versions";
+import { getVersionedData } from "@/lib/pokemon/utils";
 
 describe("getVersionedData", () => {
   it("returns the version-specific value when it exists", () => {

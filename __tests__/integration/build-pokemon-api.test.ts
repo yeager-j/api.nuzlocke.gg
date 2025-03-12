@@ -2,11 +2,12 @@ import path from "path";
 import { vol } from "memfs";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
+import mockBulbasaur from "../__fixtures__/mock-bulbasaur";
+import mockCharmander from "../__fixtures__/mock-charmander";
+import mockSquirtle from "../__fixtures__/mock-squirtle";
+
 import { buildPokemonApi } from "@/lib/pokemon/build-pokemon-api";
 import { POKEMON_DATA_PATH, POKEMON_OUTPUT_PATH } from "@/lib/pokemon/common";
-import mockBulbasaur from "@/lib/pokemon/tests/__fixtures__/mock-bulbasaur";
-import mockCharmander from "@/lib/pokemon/tests/__fixtures__/mock-charmander";
-import mockSquirtle from "@/lib/pokemon/tests/__fixtures__/mock-squirtle";
 import { loadPokemon } from "@/lib/pokemon/utils";
 
 vi.mock("fs/promises");

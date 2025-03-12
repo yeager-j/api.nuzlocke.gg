@@ -2,7 +2,7 @@ import path from "path";
 import { vol } from "memfs";
 import { beforeAll, describe, test, vi } from "vitest";
 
-import CharizardDefinition from "./__fixtures__/mock-charizard";
+import CharizardDefinition from "../../__fixtures__/mock-charizard";
 
 import { PokemonVersionGroup, PokemonVersionGroupData } from "@/data/versions";
 import { processPokemonForVersion } from "@/lib/pokemon/build-pokemon-api";

@@ -4,14 +4,14 @@ import { vol } from "memfs";
 import { bench, describe, vi } from "vitest";
 
 import mockBulbasaur from "../__fixtures__/mock-bulbasaur";
+import mockCaterpie from "../__fixtures__/mock-caterpie";
+import mockCharizard from "../__fixtures__/mock-charizard";
+import mockCharmander from "../__fixtures__/mock-charmander";
 import mockSquirtle from "../__fixtures__/mock-squirtle";
 
 import { PokemonDefinition } from "@/data/pokemon/types";
 import { buildPokemonApi } from "@/lib/pokemon/build-pokemon-api";
 import { POKEMON_DATA_PATH } from "@/lib/pokemon/common";
-import mockCaterpie from "@/lib/pokemon/tests/__fixtures__/mock-caterpie";
-import mockCharizard from "@/lib/pokemon/tests/__fixtures__/mock-charizard";
-import mockCharmander from "@/lib/pokemon/tests/__fixtures__/mock-charmander";
 import { loadPokemon } from "@/lib/pokemon/utils";
 
 vi.mock("fs/promises");

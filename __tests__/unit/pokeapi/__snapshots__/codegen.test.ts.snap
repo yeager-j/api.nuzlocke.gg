@@ -1,0 +1,145 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateDefinition > should generate a definition construct 1`] = `
+"const definition: PokemonDefinition = {
+  species: BulbasaurSpecies,
+  forms: [Bulbasaur],
+};
+
+export default definition;"
+`;
+
+exports[`generateDefinition > should generate a definition construct with multiple forms 1`] = `
+"const definition: PokemonDefinition = {
+  species: RattataSpecies,
+  forms: [Rattata, RattataAlola],
+};
+
+export default definition;"
+`;
+
+exports[`generateEvolution > should generate a versioned evolution branch construct 1`] = `
+"{
+  default: [{
+  to: "flareon",
+  trigger: EvolutionTrigger.ITEM_USE,
+  conditions: [{"type":"ITEM_USE","item":"fire-stone"}],
+},
+{
+  to: "jolteon",
+  trigger: EvolutionTrigger.ITEM_USE,
+  conditions: [{"type":"ITEM_USE","item":"thunder-stone"}],
+}],
+  versions: [{
+      appliesTo: [PokemonVersionGroup.GOLD_SILVER, PokemonVersionGroup.CRYSTAL],
+      value: [{
+  to: "flareon",
+  trigger: EvolutionTrigger.ITEM_USE,
+  conditions: [{"type":"ITEM_USE","item":"fire-stone"}],
+},
+{
+  to: "jolteon",
+  trigger: EvolutionTrigger.ITEM_USE,
+  conditions: [{"type":"ITEM_USE","item":"thunder-stone"}],
+},
+{
+  to: "vaporeon",
+  trigger: EvolutionTrigger.ITEM_USE,
+  conditions: [{"type":"ITEM_USE","item":"water-stone"}],
+}],
+    }]
+}"
+`;
+
+exports[`generateEvolution > should generate an evolution branch construct 1`] = `
+"{
+  to: "ivysaur",
+  trigger: EvolutionTrigger.LEVEL_UP,
+  conditions: [{"type":"LEVEL","minLevel":16}],
+}"
+`;
+
+exports[`generateForm > should generate the correct construct for Bulbasaur 1`] = `
+"const Bulbasaur: Pokemon = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  isDefault: true,
+  modes: [BulbasaurDefaultMode],
+  evolution: {
+    from: "",
+    evolutionBranches: {
+  default: [{
+  to: "ivysaur",
+  trigger: EvolutionTrigger.LEVEL_UP,
+  conditions: [{"type":"LEVEL","minLevel":16}],
+}],
+  versions: []
+},
+  },
+};"
+`;
+
+exports[`generateMode > should generate the correct construct for Bulbasaur 1`] = `
+"const BulbasaurDefaultMode: PokemonMode = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  isDefault: true,
+  sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+  types: {"default":["Grass","Poison"],"versions":[]},
+};"
+`;
+
+exports[`generatePokemonDefinitionFile > should generate a file for Bulbasaur 1`] = `
+"const BulbasaurSpecies: PokemonSpecies = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  nationalDexNumber: 1,
+};
+
+const BulbasaurDefaultMode: PokemonMode = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  isDefault: true,
+  sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+  types: {"default":["Grass","Poison"],"versions":[]},
+};
+
+const Bulbasaur: Pokemon = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  isDefault: true,
+  modes: [BulbasaurDefaultMode],
+  evolution: {
+    from: "",
+    evolutionBranches: {
+  default: [{
+  to: "ivysaur",
+  trigger: EvolutionTrigger.LEVEL_UP,
+  conditions: [{"type":"LEVEL","minLevel":16}],
+}],
+  versions: []
+},
+  },
+};
+
+const definition: PokemonDefinition = {
+  species: BulbasaurSpecies,
+  forms: [Bulbasaur],
+};
+
+export default definition;"
+`;
+
+exports[`generateSpecies > should generate the correct construct for Bulbasaur 1`] = `
+"const BulbasaurSpecies: PokemonSpecies = {
+  name: "bulbasaur",
+  displayName: "Bulbasaur",
+  availableIn: [...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET],
+  nationalDexNumber: 1,
+};"
+`;

@@ -450,7 +450,7 @@ I've conducted detailed benchmarks to understand build scaling characteristics:
 | 200           | 249ms                  | ~2.5s                     |
 | 500           | 614ms                  | ~6.1s                     |
 | 1000          | 1,227ms                | ~12.3s                    |
-([source](src/lib/pokemon/tests/benchmark/build-scaling.bench.ts))
+([source](__tests__/benchmark/build-scaling.bench.ts))
 
 *Projection assumes CI environment is approximately 10x slower than local development hardware based on typical cloud
 compute resource comparisons.

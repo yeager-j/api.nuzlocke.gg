@@ -2,9 +2,10 @@ import path from "path";
 import { vol } from "memfs";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
+import mockCaterpie from "../__fixtures__/mock-caterpie";
+
 import { buildLocationApi } from "@/lib/pokemon/build-location-api";
 import { LOCATION_OUTPUT_PATH, POKEMON_DATA_PATH } from "@/lib/pokemon/common";
-import mockCaterpie from "@/lib/pokemon/tests/__fixtures__/mock-caterpie";
 import { loadPokemon } from "@/lib/pokemon/utils";
 
 vi.mock("fs/promises");
