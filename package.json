@@ -8,12 +8,13 @@
     "build:deploy": "pnpm run build && pnpm run generate-data",
     "start": "next start",
     "lint": "next lint",
-    "test": "pnpm run test:unit && pnpm run test:e2e",
-    "test:unit": "vitest --run ./src",
-    "test:benchmark": "vitest bench --run ./src",
+    "test": "vitest --run ./__tests__",
+    "test:all": "pnpm run test && pnpm run test:e2e",
+    "test:benchmark": "vitest bench --run ./__tests__",
     "test:e2e": "playwright test",
-    "test:update": "vitest --run -u ./src",
-    "generate-data": "tsx ./scripts/build.ts"
+    "test:update": "vitest --run -u ./__tests__",
+    "generate-data": "tsx ./scripts/build.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
@@ -42,6 +43,8 @@
     "@vitest/coverage-v8": "^3.0.8",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "eslint-config-prettier": "^10.1.1",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
     "memfs": "^4.17.0",
     "prettier": "^3.5.2",
