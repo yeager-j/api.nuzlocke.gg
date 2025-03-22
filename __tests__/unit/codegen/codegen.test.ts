@@ -15,7 +15,7 @@ import {
   generateMode,
   generatePokemonDefinitionFile,
   generateSpecies,
-} from "@/lib/pokeapi/codegen";
+} from "@/lib/codegen/generators";
 
 describe("generateSpecies", () => {
   test("should generate the correct construct for Bulbasaur", () => {

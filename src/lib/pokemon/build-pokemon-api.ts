@@ -203,6 +203,10 @@ export async function buildPokemonApi(): Promise<void> {
 
     // Write the form lists
     for (const [version, pokedex] of versionFormListMap) {
+      const sortedByNatDex = pokedex.sort(
+        (a, b) => a.nationalDexNumber - b.nationalDexNumber,
+      );
+
       await fs.writeFile(
         path.join(
           POKEMON_OUTPUT_PATH,
@@ -210,12 +214,16 @@ export async function buildPokemonApi(): Promise<void> {
           "lists",
           "by-form.json",
         ),
-        JSON.stringify(pokedex),
+        JSON.stringify(sortedByNatDex),
       );
     }
 
     // Write the species lists
     for (const [version, pokedex] of versionSpeciesListMap) {
+      const sortedByNatDex = pokedex.sort(
+        (a, b) => a.nationalDexNumber - b.nationalDexNumber,
+      );
+
       await fs.writeFile(
         path.join(
           POKEMON_OUTPUT_PATH,
@@ -223,7 +231,7 @@ export async function buildPokemonApi(): Promise<void> {
           "lists",
           "by-species.json",
         ),
-        JSON.stringify(pokedex),
+        JSON.stringify(sortedByNatDex),
       );
     }
 

@@ -5,7 +5,7 @@ exports[`buildPokemonApi integration > should build bulbasaur > bulbasaur-form-r
   "displayName": "Bulbasaur",
   "encounters": [
     {
-      "location": "PALLET_TOWN",
+      "location": "KANTO_PALLET_TOWN",
       "method": "GIFT",
     },
   ],
@@ -54,7 +54,7 @@ exports[`buildPokemonApi integration > should build bulbasaur > bulbasaur-specie
       "displayName": "Bulbasaur",
       "encounters": [
         {
-          "location": "PALLET_TOWN",
+          "location": "KANTO_PALLET_TOWN",
           "method": "GIFT",
         },
       ],
@@ -99,7 +99,7 @@ exports[`buildPokemonApi integration > should build charmander > charmander-form
   "displayName": "Charmander",
   "encounters": [
     {
-      "location": "PALLET_TOWN",
+      "location": "KANTO_PALLET_TOWN",
       "method": "GIFT",
     },
   ],
@@ -147,7 +147,7 @@ exports[`buildPokemonApi integration > should build charmander > charmander-spec
       "displayName": "Charmander",
       "encounters": [
         {
-          "location": "PALLET_TOWN",
+          "location": "KANTO_PALLET_TOWN",
           "method": "GIFT",
         },
       ],
@@ -191,7 +191,7 @@ exports[`buildPokemonApi integration > should build squirtle > squirtle-form-rb 
   "displayName": "Squirtle",
   "encounters": [
     {
-      "location": "PALLET_TOWN",
+      "location": "KANTO_PALLET_TOWN",
       "method": "GIFT",
     },
   ],
@@ -239,7 +239,7 @@ exports[`buildPokemonApi integration > should build squirtle > squirtle-species-
       "displayName": "Squirtle",
       "encounters": [
         {
-          "location": "PALLET_TOWN",
+          "location": "KANTO_PALLET_TOWN",
           "method": "GIFT",
         },
       ],

@@ -1,106 +1,83 @@
 import { describe, expect, test } from "vitest";
 
-import {
-  availableStartingDP,
-  availableStartingRB,
-  availableStartingUSUM,
-  availableStartingXY,
-  PokemonVersionGroup,
-} from "@/data/versions";
-import { enumToString, generateAvailableInString } from "@/lib/pokeapi/helpers";
+import { isModeOf } from "@/lib/pokeapi/utils";
 
-describe("generateAvailableInString", () => {
-  // Test exact matches with helper arrays
-  test("should return the helper array name when there is an exact match", () => {
-    expect(generateAvailableInString(availableStartingRB)).toBe(
-      "availableStartingRB",
-    );
-    expect(generateAvailableInString(availableStartingXY)).toBe(
-      "availableStartingXY",
-    );
-    expect(generateAvailableInString(availableStartingUSUM)).toBe(
-      "availableStartingUSUM",
-    );
+describe("isModeOf", () => {
+  test("returns true for standard -mega and -gmax forms", () => {
+    expect(isModeOf("charizard", "charizard-mega-x")).toBe(true);
+    expect(isModeOf("charizard", "charizard-mega-y")).toBe(true);
+    expect(isModeOf("charizard", "charizard-gmax")).toBe(true);
   });
 
-  // Test helper array + additional version groups
-  test("should use spread syntax with additional version groups", () => {
-    // Butterfree example: availableStartingRB + SWORD_SHIELD
-    const butterfreeVersions = [
-      ...availableStartingRB,
-      PokemonVersionGroup.SWORD_SHIELD,
-    ];
-    expect(generateAvailableInString(butterfreeVersions)).toBe(
-      "[...availableStartingRB, PokemonVersionGroup.SWORD_SHIELD]",
+  test("returns true for Darmanitan's Zen Modes", () => {
+    expect(isModeOf("darmanitan-standard", "darmanitan-zen")).toBe(true);
+    expect(isModeOf("darmanitan-galar-standard", "darmanitan-galar-zen")).toBe(
+      true,
     );
-
-    // Test with multiple additional version groups
-    const multipleAdditions = [
-      ...availableStartingDP,
-      PokemonVersionGroup.SWORD_SHIELD,
-      PokemonVersionGroup.SCARLET_VIOLET,
-    ];
-    expect(generateAvailableInString(multipleAdditions)).toBe(
-      "[...availableStartingDP, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.SCARLET_VIOLET]",
-    );
+    expect(isModeOf("darmanitan", "darmanitan-zen")).toBe(true);
   });
 
-  // Test with a subset of a helper array
-  test("should find the most specific helper array that is a superset", () => {
-    // Only available in XY and ORAS (subset of availableStartingORAS)
-    const xyAndOras = [
-      PokemonVersionGroup.XY,
-      PokemonVersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE,
-    ];
-
-    // This should find a helper array that's a superset and list the specific versions
-    expect(generateAvailableInString(xyAndOras)).toBe(
-      "[PokemonVersionGroup.XY, PokemonVersionGroup.OMEGA_RUBY_ALPHA_SAPPHIRE]",
-    );
+  test("returns true for Necrozma Ultra", () => {
+    expect(isModeOf("necrozma-dusk", "necrozma-ultra")).toBe(true);
+    expect(isModeOf("necrozma-dawn", "necrozma-ultra")).toBe(true);
+    expect(isModeOf("necrozma", "necrozma-ultra")).toBe(false); // Base Necrozma can't Ultra Burst
   });
 
-  // Test with no matching pattern
-  test("should list all version groups when no pattern matches", () => {
-    // A completely custom set of version groups
-    const customVersions = [
-      PokemonVersionGroup.DIAMOND_PEARL,
-      PokemonVersionGroup.SWORD_SHIELD,
-      PokemonVersionGroup.RED_BLUE,
-    ];
-
-    expect(generateAvailableInString(customVersions)).toBe(
-      "[PokemonVersionGroup.DIAMOND_PEARL, PokemonVersionGroup.SWORD_SHIELD, PokemonVersionGroup.RED_BLUE]",
-    );
+  test("returns true for Aegislash modes", () => {
+    expect(isModeOf("aegislash-shield", "aegislash-blade")).toBe(true);
+    expect(isModeOf("aegislash", "aegislash-blade")).toBe(true);
   });
 
-  // Test with incomplete helper array patterns
-  test("should handle pokemon available in non-consecutive version groups", () => {
-    // Available in RB and then skipped generations until DP
-    const discontinuousVersions = [
-      PokemonVersionGroup.RED_BLUE,
-      PokemonVersionGroup.DIAMOND_PEARL,
-      PokemonVersionGroup.PLATINUM,
-    ];
-
-    expect(generateAvailableInString(discontinuousVersions)).toBe(
-      "[PokemonVersionGroup.RED_BLUE, PokemonVersionGroup.DIAMOND_PEARL, PokemonVersionGroup.PLATINUM]",
-    );
+  test("returns true for Meloetta forms", () => {
+    expect(isModeOf("meloetta-aria", "meloetta-pirouette")).toBe(true);
   });
 
-  // Test with empty array
-  test("should handle empty version groups array", () => {
-    expect(generateAvailableInString([])).toBe("[]");
+  test("returns true for Greninja-Ash transformation", () => {
+    expect(isModeOf("greninja-battle-bond", "greninja-ash")).toBe(true);
+    expect(isModeOf("greninja", "greninja-ash")).toBe(false);
   });
-});
 
-describe("enumFromValue", () => {
-  test("should return a stringified enum representation", () => {
-    const str = enumToString(
-      "PokemonVersionGroup",
-      PokemonVersionGroup,
-      "FIRERED_LEAFGREEN",
+  test("returns true for Minior's core transformations", () => {
+    expect(isModeOf("minior-red-meteor", "minior-red")).toBe(true);
+    expect(isModeOf("minior-blue-meteor", "minior-blue")).toBe(true);
+    expect(isModeOf("minior-green-meteor", "minior-violet")).toBe(false);
+    expect(isModeOf("minior", "minior-red")).toBe(false); // Base form shouldn't trigger this
+  });
+
+  test("returns false for Kyurem fusions", () => {
+    expect(isModeOf("kyurem", "kyurem-black")).toBe(false);
+    expect(isModeOf("kyurem", "kyurem-white")).toBe(false);
+    expect(isModeOf("kyurem-black", "kyurem-white")).toBe(false);
+  });
+
+  test("returns true for zygarde-complete if power-construct", () => {
+    expect(isModeOf("zygarde-50-power-construct", "zygarde-complete")).toBe(
+      true,
     );
+    expect(isModeOf("zygarde-10-power-construct", "zygarde-complete")).toBe(
+      true,
+    );
+    expect(isModeOf("zygarde-50", "zygarde-complete")).toBe(false);
+    expect(isModeOf("zygarde-10", "zygarde-complete")).toBe(false);
+  });
 
-    expect(str).toBe("PokemonVersionGroup.FIRERED_LEAFGREEN");
+  test("returns false for unrelated forms", () => {
+    expect(isModeOf("charizard", "venusaur-mega")).toBe(false);
+    expect(isModeOf("pikachu", "pikachu-gmax")).toBe(true); // Pikachu does have a G-Max mode
+    expect(isModeOf("charizard", "blastoise-mega")).toBe(false);
+  });
+
+  test("returns true for default mode-matching", () => {
+    expect(isModeOf("rayquaza", "rayquaza-mega")).toBe(true);
+    expect(isModeOf("blaziken", "blaziken-mega")).toBe(true);
+    expect(isModeOf("mewtwo", "mewtwo-mega-x")).toBe(true);
+    expect(isModeOf("mewtwo", "mewtwo-mega-y")).toBe(true);
+  });
+
+  test("handles malformed inputs gracefully", () => {
+    expect(isModeOf("", "charizard-mega-x")).toBe(false);
+    expect(isModeOf("charizard", "")).toBe(false);
+    expect(isModeOf("", "")).toBe(false);
+    expect(isModeOf("charizard", "charizard")).toBe(false); // Should not match itself
   });
 });

@@ -9,9 +9,9 @@ import { VersionedProperty } from "@/data/types";
 import {
   evolutionTriggerEnumHelper,
   generateAvailableInString,
+  toPascalCase,
   versionGroupEnumHelper,
-} from "@/lib/pokeapi/helpers";
-import { toPascalCase } from "@/lib/pokeapi/utils";
+} from "@/lib/codegen/utils";
 
 function speciesName(species: PokemonSpecies): string {
   return `${toPascalCase(species.name)}Species`;
@@ -136,4 +136,47 @@ export function generatePokemonDefinitionFile(definition: PokemonDefinition) {
   );
 
   return `${speciesCodegen}\n\n${modesCodegen.join("\n\n")}\n\n${formsCodegen.join("\n\n")}\n\n${definitionCodegen}`;
+}
+
+/**
+ * Constructs a JSDoc-style comment block for the given input comment string.
+ * The comment is formatted to ensure each line does not exceed the specified maximum width.
+ *
+ * @param {string} comment The comment text to be formatted into a JSDoc block.
+ * @param {number} [maxWidth=120] The desired maximum width for each line in the formatted JSDoc comment block, including reserved characters for formatting. Default is 120.
+ * @return {string} A formatted JSDoc comment block containing the input comment text.
+ */
+export function generateComment(
+  comment: string,
+  maxWidth: number = 120,
+): string {
+  // Reserve 3 characters for ' * ' at the beginning of each line
+  const contentWidth = maxWidth - 3;
+
+  // Split the comment into words
+  const words = comment.split(/\s+/);
+  const lines: string[] = [];
+  let currentLine = "";
+
+  // Build lines within max width
+  words.forEach((word) => {
+    // Check if adding this word would exceed the line width
+    if (
+      currentLine.length + word.length + 1 > contentWidth &&
+      currentLine.length > 0
+    ) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = currentLine.length === 0 ? word : `${currentLine} ${word}`;
+    }
+  });
+
+  // Add the last line if it has content
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  // Format into JSDoc comment
+  return `/**\n${lines.map((line) => ` * ${line}`).join("\n")}\n */`;
 }

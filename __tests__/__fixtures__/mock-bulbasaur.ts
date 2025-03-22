@@ -1,6 +1,6 @@
 import { EvolutionTrigger } from "@/data/evolution/common";
 import { EncounterMethod } from "@/data/locations/common";
-import { KantoLocation } from "@/data/locations/regions/kanto/locations";
+import { PokemonLocation } from "@/data/locations/location-list";
 import {
   Pokemon,
   PokemonDefinition,
@@ -71,7 +71,7 @@ const Bulbasaur: Pokemon = {
         value: [
           {
             method: EncounterMethod.GIFT,
-            location: KantoLocation.PALLET_TOWN,
+            location: PokemonLocation.KANTO_PALLET_TOWN,
           },
         ],
       },

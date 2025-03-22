@@ -1,6 +1,6 @@
 import { EvolutionTrigger } from "@/data/evolution/common";
 import { EncounterMethod } from "@/data/locations/common";
-import { KantoLocation } from "@/data/locations/regions/kanto/locations";
+import { PokemonLocation } from "@/data/locations/location-list";
 import {
   Pokemon,
   PokemonDefinition,
@@ -56,15 +56,15 @@ const Pidgeotto: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_14,
+            location: PokemonLocation.KANTO_ROUTE_14,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_15,
+            location: PokemonLocation.KANTO_ROUTE_15,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_21,
+            location: PokemonLocation.KANTO_ROUTE_21,
           },
         ],
       },
@@ -73,27 +73,27 @@ const Pidgeotto: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_13,
+            location: PokemonLocation.KANTO_ROUTE_13,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_14,
+            location: PokemonLocation.KANTO_ROUTE_14,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_15,
+            location: PokemonLocation.KANTO_ROUTE_15,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.BERRY_FOREST,
+            location: PokemonLocation.KANTO_BERRY_FOREST,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.BOND_BRIDGE,
+            location: PokemonLocation.KANTO_BOND_BRIDGE,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.FIVE_ISLE_MEADOW,
+            location: PokemonLocation.KANTO_FIVE_ISLE_MEADOW,
           },
         ],
       },

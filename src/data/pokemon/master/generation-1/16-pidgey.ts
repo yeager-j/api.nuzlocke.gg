@@ -1,6 +1,6 @@
 import { EvolutionTrigger } from "@/data/evolution/common";
 import { EncounterMethod } from "@/data/locations/common";
-import { KantoLocation } from "@/data/locations/regions/kanto/locations";
+import { PokemonLocation } from "@/data/locations/location-list";
 import {
   Pokemon,
   PokemonDefinition,
@@ -56,59 +56,59 @@ const Pidgey: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_1,
+            location: PokemonLocation.KANTO_ROUTE_1,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_2,
+            location: PokemonLocation.KANTO_ROUTE_2,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_3,
+            location: PokemonLocation.KANTO_ROUTE_3,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_5,
+            location: PokemonLocation.KANTO_ROUTE_5,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_6,
+            location: PokemonLocation.KANTO_ROUTE_6,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_7,
+            location: PokemonLocation.KANTO_ROUTE_7,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_8,
+            location: PokemonLocation.KANTO_ROUTE_8,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_12,
+            location: PokemonLocation.KANTO_ROUTE_12,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_13,
+            location: PokemonLocation.KANTO_ROUTE_13,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_14,
+            location: PokemonLocation.KANTO_ROUTE_14,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_15,
+            location: PokemonLocation.KANTO_ROUTE_15,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_21,
+            location: PokemonLocation.KANTO_ROUTE_21,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_24,
+            location: PokemonLocation.KANTO_ROUTE_24,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_25,
+            location: PokemonLocation.KANTO_ROUTE_25,
           },
         ],
       },
@@ -117,67 +117,67 @@ const Pidgey: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_1,
+            location: PokemonLocation.KANTO_ROUTE_1,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_2,
+            location: PokemonLocation.KANTO_ROUTE_2,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_3,
+            location: PokemonLocation.KANTO_ROUTE_3,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_5,
+            location: PokemonLocation.KANTO_ROUTE_5,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_6,
+            location: PokemonLocation.KANTO_ROUTE_6,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_7,
+            location: PokemonLocation.KANTO_ROUTE_7,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_8,
+            location: PokemonLocation.KANTO_ROUTE_8,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_12,
+            location: PokemonLocation.KANTO_ROUTE_12,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_13,
+            location: PokemonLocation.KANTO_ROUTE_13,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_14,
+            location: PokemonLocation.KANTO_ROUTE_14,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_15,
+            location: PokemonLocation.KANTO_ROUTE_15,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_24,
+            location: PokemonLocation.KANTO_ROUTE_24,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_25,
+            location: PokemonLocation.KANTO_ROUTE_25,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.BERRY_FOREST,
+            location: PokemonLocation.KANTO_BERRY_FOREST,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.BOND_BRIDGE,
+            location: PokemonLocation.KANTO_BOND_BRIDGE,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.FIVE_ISLE_MEADOW,
+            location: PokemonLocation.KANTO_FIVE_ISLE_MEADOW,
           },
         ],
       },

@@ -17,7 +17,10 @@ export enum PokemonVersionGroup {
   OMEGA_RUBY_ALPHA_SAPPHIRE = "OMEGA_RUBY_ALPHA_SAPPHIRE",
   SUN_MOON = "SUN_MOON",
   ULTRA_SUN_ULTRA_MOON = "ULTRA_SUN_ULTRA_MOON",
+  LETS_GO = "LETS_GO",
   SWORD_SHIELD = "SWORD_SHIELD",
+  LEGENDS_ARCEUS = "LEGENDS_ARCEUS",
+  BRILLIANT_DIAMOND_SHINING_PEARL = "BRILLIANT_DIAMOND_SHINING_PEARL",
   SCARLET_VIOLET = "SCARLET_VIOLET",
 }
 
@@ -50,8 +53,13 @@ export enum PokemonGame {
   MOON = "MOON",
   ULTRA_SUN = "ULTRA_SUN",
   ULTRA_MOON = "ULTRA_MOON",
+  LETS_GO_PIKACHU = "LETS_GO_PIKACHU",
+  LETS_GO_EEVEE = "LETS_GO_EEVEE",
   SWORD = "SWORD",
   SHIELD = "SHIELD",
+  LEGENDS_ARCEUS = "LEGENDS_ARCEUS",
+  BRILLIANT_DIAMOND = "BRILLIANT_DIAMOND",
+  SHINING_PEARL = "SHINING_PEARL",
   SCARLET = "SCARLET",
   VIOLET = "VIOLET",
 }
@@ -140,15 +148,30 @@ export const PokemonVersionGroupData: Record<
     name: "Ultra Sun & Ultra Moon",
     order: 16,
   },
+  [PokemonVersionGroup.LETS_GO]: {
+    id: "lets-go",
+    name: "Let's Go Pikachu & Let's Go Eevee",
+    order: 17,
+  },
   [PokemonVersionGroup.SWORD_SHIELD]: {
     id: "sword-shield",
     name: "Sword & Shield",
-    order: 17,
+    order: 18,
+  },
+  [PokemonVersionGroup.LEGENDS_ARCEUS]: {
+    id: "legends-arceus",
+    name: "Legends: Arceus",
+    order: 19,
+  },
+  [PokemonVersionGroup.BRILLIANT_DIAMOND_SHINING_PEARL]: {
+    id: "brilliant-diamond-shining-pearl",
+    name: "Brilliant Diamond & Shining Pearl",
+    order: 20,
   },
   [PokemonVersionGroup.SCARLET_VIOLET]: {
     id: "scarlet-violet",
     name: "Scarlet & Violet",
-    order: 18,
+    order: 21,
   },
 };
 
@@ -293,6 +316,16 @@ export const PokemonGameData: Record<PokemonGame, PokemonGameMetadata> = {
     name: "Pokémon Ultra Moon",
     versionGroup: PokemonVersionGroup.ULTRA_SUN_ULTRA_MOON,
   },
+  [PokemonGame.LETS_GO_PIKACHU]: {
+    id: "lets-go-pikachu",
+    name: "Let's Go Pikachu",
+    versionGroup: PokemonVersionGroup.LETS_GO,
+  },
+  [PokemonGame.LETS_GO_EEVEE]: {
+    id: "lets-go-eevee",
+    name: "Let's Go Eevee",
+    versionGroup: PokemonVersionGroup.LETS_GO,
+  },
   [PokemonGame.SWORD]: {
     id: "sword",
     name: "Pokémon Sword",
@@ -302,6 +335,21 @@ export const PokemonGameData: Record<PokemonGame, PokemonGameMetadata> = {
     id: "shield",
     name: "Pokémon Shield",
     versionGroup: PokemonVersionGroup.SWORD_SHIELD,
+  },
+  [PokemonGame.LEGENDS_ARCEUS]: {
+    id: "legends-arceus",
+    name: "Legends: Arceus",
+    versionGroup: PokemonVersionGroup.LEGENDS_ARCEUS,
+  },
+  [PokemonGame.BRILLIANT_DIAMOND]: {
+    id: "brilliant-diamond",
+    name: "Brilliant Diamond",
+    versionGroup: PokemonVersionGroup.BRILLIANT_DIAMOND_SHINING_PEARL,
+  },
+  [PokemonGame.SHINING_PEARL]: {
+    id: "shining-pearl",
+    name: "Shining Pearl",
+    versionGroup: PokemonVersionGroup.BRILLIANT_DIAMOND_SHINING_PEARL,
   },
   [PokemonGame.SCARLET]: {
     id: "scarlet",
@@ -394,15 +442,6 @@ export const availableStartingRB: PokemonVersionGroup[] = [
   PokemonVersionGroup.RED_BLUE,
 ];
 
-export const versionsWithoutHiddenAbilities: PokemonVersionGroup[] = [
-  PokemonVersionGroup.RUBY_SAPPHIRE,
-  PokemonVersionGroup.FIRERED_LEAFGREEN,
-  PokemonVersionGroup.EMERALD,
-  PokemonVersionGroup.DIAMOND_PEARL,
-  PokemonVersionGroup.PLATINUM,
-  PokemonVersionGroup.HEARTGOLD_SOULSILVER,
-];
-
 export const gen1Games: PokemonVersionGroup[] = [
   PokemonVersionGroup.RED_BLUE,
   PokemonVersionGroup.YELLOW,
@@ -451,3 +490,15 @@ export const gen9Games: PokemonVersionGroup[] = [
 export const gamesWithMegaEvolution: PokemonVersionGroup[] = [...gen6Games];
 
 export const gamesWithGigantamax: PokemonVersionGroup[] = [...gen8Games];
+
+export const versionsWithoutFairyType: PokemonVersionGroup[] = [
+  ...gen1Games,
+  ...gen2Games,
+  ...gen3Games,
+  ...gen4Games,
+  ...gen5Games,
+];
+
+export const versionsWithoutDarkOrSteelType: PokemonVersionGroup[] = [
+  ...gen1Games,
+];

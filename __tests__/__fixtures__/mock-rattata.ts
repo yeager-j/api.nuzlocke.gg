@@ -1,17 +1,11 @@
 import { EvolutionTrigger } from "@/data/evolution/common";
-import { EncounterMethod } from "@/data/locations/common";
-import { KantoLocation } from "@/data/locations/regions/kanto/locations";
 import {
   Pokemon,
   PokemonDefinition,
   PokemonMode,
   PokemonSpecies,
 } from "@/data/pokemon/types";
-import {
-  availableStartingRB,
-  availableStartingSM,
-  PokemonVersionGroup,
-} from "@/data/versions";
+import { availableStartingRB, availableStartingSM } from "@/data/versions";
 
 const RattataSpecies: PokemonSpecies = {
   name: "rattata",

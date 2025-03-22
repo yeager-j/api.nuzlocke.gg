@@ -5,7 +5,7 @@ import {
   PokemonModeName,
   PokemonSpeciesName,
 } from "@/data/pokemon/names";
-import { PokemonType, VersionedProperty } from "@/data/types";
+import { PokemonTypes, VersionedProperty } from "@/data/types";
 import { PokemonVersionGroup } from "@/data/versions";
 
 interface PokemonCommon<T extends string> {
@@ -17,12 +17,12 @@ interface PokemonCommon<T extends string> {
 export interface PokemonMode extends PokemonCommon<PokemonModeName> {
   sprite: string;
   isDefault: boolean;
-  types: VersionedProperty<[PokemonType] | [PokemonType, PokemonType]>;
+  types: VersionedProperty<PokemonTypes>;
 }
 
 export interface VersionedPokemonMode
   extends Omit<PokemonMode, "types" | "availableIn"> {
-  types: [PokemonType] | [PokemonType, PokemonType];
+  types: PokemonTypes;
 }
 
 export interface PokemonSpecies extends PokemonCommon<PokemonSpeciesName> {

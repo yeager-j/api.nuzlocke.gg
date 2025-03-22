@@ -19,7 +19,33 @@ import {
   availableStartingY,
   PokemonVersionGroup,
 } from "@/data/versions";
-import { arraysEqual, isSubset } from "@/lib/pokeapi/utils";
+
+export function toPascalCase(str: string) {
+  const regexp = str.match(
+    /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g,
+  );
+
+  return (regexp ?? [])
+    .map((x) => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase())
+    .join("");
+}
+
+export function arraysEqual(
+  a: PokemonVersionGroup[],
+  b: PokemonVersionGroup[],
+): boolean {
+  if (a.length !== b.length) return false;
+  return (
+    a.every((item) => b.includes(item)) && b.every((item) => a.includes(item))
+  );
+}
+
+export function isSubset(
+  subset: PokemonVersionGroup[],
+  superset: PokemonVersionGroup[],
+): boolean {
+  return subset.every((item) => superset.includes(item));
+}
 
 /**
  * Generates a string representation indicating the availability of a Pokémon
@@ -87,6 +113,23 @@ export function generateAvailableInString(
   return bestResult;
 }
 
+/**
+ * Converts an enum value to a string representation including the enum name and key. Used in code generation.
+ *
+ * @param {string} enumName - The name of the enum.
+ * @param {T} enumObj - The enum object containing key-value pairs.
+ * @param {string | number} value - The value to find within the enum.
+ * @return {string} A string in the format of "EnumName.Key" if the value exists in the enum; otherwise, the string representation of the value.
+ */
+export function enumToString<T extends Record<string, string | number>>(
+  enumName: string,
+  enumObj: T,
+  value: string | number,
+): string {
+  const key = Object.keys(enumObj).find((k) => enumObj[k as keyof T] === value);
+  return key ? `${enumName}.${key}` : String(value);
+}
+
 export const versionGroupEnumHelper = enumToString.bind(
   null,
   "PokemonVersionGroup",
@@ -104,20 +147,3 @@ export const encounterMethodEnumHelper = enumToString.bind(
   "EncounterMethod",
   EncounterMethod,
 );
-
-/**
- * Converts an enum value to a string representation including the enum name and key. Used in code generation.
- *
- * @param {string} enumName - The name of the enum.
- * @param {T} enumObj - The enum object containing key-value pairs.
- * @param {string | number} value - The value to find within the enum.
- * @return {string} A string in the format of "EnumName.Key" if the value exists in the enum; otherwise, the string representation of the value.
- */
-export function enumToString<T extends Record<string, string | number>>(
-  enumName: string,
-  enumObj: T,
-  value: string | number,
-): string {
-  const key = Object.keys(enumObj).find((k) => enumObj[k as keyof T] === value);
-  return key ? `${enumName}.${key}` : String(value);
-}

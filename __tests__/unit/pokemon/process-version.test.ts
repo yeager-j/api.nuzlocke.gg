@@ -17,7 +17,7 @@ describe("Generate Pokemon JSON", () => {
     vol.reset();
   });
 
-  test.concurrent.for(Object.values(PokemonVersionGroup))(
+  test.concurrent.for(CharizardDefinition.species.availableIn)(
     "should generate Charizard for %s",
     async (versionGroup, { expect }) => {
       await processPokemonForVersion(CharizardDefinition, versionGroup);

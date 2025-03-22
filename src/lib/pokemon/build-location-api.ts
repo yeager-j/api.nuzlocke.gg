@@ -1,8 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 
-import { PokemonLocationData } from "@/data/locations/common";
-import { PokemonLocation } from "@/data/locations/types";
+import { LocationData, PokemonLocation } from "@/data/locations/location-list";
 import { PokemonDefinition } from "@/data/pokemon/types";
 import { PokemonGameMetadata } from "@/data/types";
 import {
@@ -96,8 +95,8 @@ export async function buildLocationApi(): Promise<void> {
 
         for (const [location, encounters] of encounterMap) {
           locations.push({
-            id: PokemonLocationData[location].id,
-            name: PokemonLocationData[location].name,
+            id: LocationData[location].id,
+            name: LocationData[location].name,
             encounters: encounters.filter(
               (e) => !e.exclusiveTo || e.exclusiveTo.includes(game),
             ),

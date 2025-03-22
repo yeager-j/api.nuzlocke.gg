@@ -20,6 +20,8 @@ export type PokemonType =
   | "Steel"
   | "Fairy";
 
+export type PokemonTypes = [PokemonType] | [PokemonType, PokemonType];
+
 export interface VersionedProperty<T> {
   default: T;
   versions: {

@@ -1,6 +1,6 @@
 import { EvolutionTrigger } from "@/data/evolution/common";
 import { EncounterMethod } from "@/data/locations/common";
-import { KantoLocation } from "@/data/locations/regions/kanto/locations";
+import { PokemonLocation } from "@/data/locations/location-list";
 import {
   Pokemon,
   PokemonDefinition,
@@ -60,21 +60,21 @@ const Weedle: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_2,
+            location: PokemonLocation.KANTO_ROUTE_2,
             exclusiveTo: PokemonGame.RED,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_24,
+            location: PokemonLocation.KANTO_ROUTE_24,
             exclusiveTo: PokemonGame.RED,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_25,
+            location: PokemonLocation.KANTO_ROUTE_25,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.VIRIDIAN_FOREST,
+            location: PokemonLocation.KANTO_VIRIDIAN_FOREST,
           },
         ],
       },
@@ -83,23 +83,23 @@ const Weedle: Pokemon = {
         value: [
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_2,
+            location: PokemonLocation.KANTO_ROUTE_2,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_24,
+            location: PokemonLocation.KANTO_ROUTE_24,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.ROUTE_25,
+            location: PokemonLocation.KANTO_ROUTE_25,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.PATTERN_BUSH,
+            location: PokemonLocation.KANTO_PATTERN_BUSH,
           },
           {
             method: EncounterMethod.TALL_GRASS,
-            location: KantoLocation.VIRIDIAN_FOREST,
+            location: PokemonLocation.KANTO_VIRIDIAN_FOREST,
           },
         ],
       },
